@@ -24,8 +24,8 @@
 <section id="permissions" class="page"><div class="panel"><h2>تۆمارکردنی سەماحی ڕۆژانە</h2><form id="permForm"><input type="hidden" id="permId"><div class="grid"><div class="field"><label>فەرمانبەر *</label><select id="permEmployee" required></select></div><div class="field"><label>ژمارەی زنجیرە *</label><input id="permSeq" required></div><div class="field"><label>بەروار *</label><input id="permDate" type="date" required></div><div class="field"><label>لە کاتژمێر *</label><input id="timeFrom" type="time" required></div><div class="field"><label>بۆ کاتژمێر *</label><input id="timeTo" type="time" required></div><div class="field"><label>جۆری سەماح *</label><input id="permType" required></div><div class="field"><label>تێبینی</label><input id="permNotes"></div></div><div class="actions"><button class="btn">پاشەکەوتکردن</button><button type="button" class="btn gray" id="clearPerm">پاککردنەوە</button></div></form></div><div class="panel"><h2>تۆمارەکانی سەماح</h2><input id="searchPerm" class="search" placeholder="گەڕان"><div class="tablewrap"><table><thead><tr><th>زنجیرە</th><th>فەرمانبەر</th><th>بەروار</th><th>لە کات</th><th>بۆ کات</th><th>جۆر</th><th>تێبینی</th><th>کردار</th></tr></thead><tbody id="permRows"></tbody></table></div></div></section>
 <div id="msg" class="msg hidden"></div></main></div></section></div>
 <script>
-const URL='https://znomldkvmhbvvbzqldmi.supabase.co',KEY='sb_publishable_z_f3Wc32pGg6in2tDRq5Ug_yg4XqoLH';
-const db=window.supabase.createClient(URL,KEY),$=id=>document.getElementById(id);let E=[],L=[],P=[];
+const SUPABASE_URL='https://znomldkvmhbvvbzqldmi.supabase.co',KEY='sb_publishable_z_f3Wc32pGg6in2tDRq5Ug_yg4XqoLH';
+const db=window.supabase.createClient(SUPABASE_URL,KEY),$=id=>document.getElementById(id);let E=[],L=[],P=[];
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function say(t){$('msg').textContent=t;$('msg').classList.remove('hidden')}
 function set(id,v){$(id).value=v??''}function clear(ids){ids.forEach(id=>set(id,''))}
