@@ -58,7 +58,7 @@
 <div id="msg" class="msg hidden"></div></main></div></section></div>
 <script>
 const SUPABASE_URL='https://znomldkvmhbvvbzqldmi.supabase.co',KEY='sb_publishable_z_f3Wc32pGg6in2tDRq5Ug_yg4XqoLH';
-const db=window.supabase.createClient(SUPABASE_URL,KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true,storage:window.localStorage,storageKey:'employee-leave-system-auth'}}),$=id=>document.getElementById(id);let EL=[],EP=[],ET=[],L=[],P=[],O=[],T=[];
+const db=window.supabase.createClient(SUPABASE_URL,KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true,storage:window.localStorage,storageKey:'sb-znomldkvmhbvvbzqldmi-auth-token'}}),$=id=>document.getElementById(id);let EL=[],EP=[],ET=[],L=[],P=[],O=[],T=[];
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function say(t){$('msg').textContent=t;$('msg').classList.remove('hidden')}
 function set(id,v){$(id).value=v??''}function clear(ids){ids.forEach(id=>set(id,''))}
