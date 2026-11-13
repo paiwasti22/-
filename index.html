@@ -1171,6 +1171,7 @@ window.clearPermForm=clearPermForm;
 $('backup').onclick=()=>{let a=document.createElement('a'),u=URL.createObjectURL(new Blob([JSON.stringify({employees:E,leave_records:L,daily_permissions:P,long_term_leaves:T},null,2)],{type:'application/json'}));a.href=u;a.download='leave-permission-backup.json';a.click();URL.revokeObjectURL(u)};
 
 
+
 document.addEventListener('click',async function(ev){
  const btn=ev.target.closest('#globalDeleteBtn');
  if(!btn)return;
@@ -1178,26 +1179,44 @@ document.addEventListener('click',async function(ev){
  if(btn.dataset.running==='1')return;
  const first=window.confirm('ئاگاداری گرنگ! هەموو داتای فەرمانبەران و مۆڵەت و سەماحی ڕۆژانە و مۆڵەتی درێژخایەن دەسڕدرێتەوە. پێش سڕینەوە پاشەکەوتی JSON دادەبەزێت. دڵنیایت؟');
  if(!first)return;
- const second=window.confirm('ئەم کردارە ناگەڕێتەوە. دڵنیایت کە دەتەوێت هەموو زانیارییە تۆمارکراوەکان بسڕیتەوە؟');
- if(!second)return;
+ const second=window.prompt('بۆ پشتڕاستکردنەوە، تکایە وشەی سڕینەوەی گشتی بنووسە:');
+ if(second!=='سڕینەوەی گشتی')return say('سڕینەوە هەڵوەشێنرایەوە؛ وشەی پشتڕاستکردنەوە دروست نەبوو.');
  btn.dataset.running='1';btn.disabled=true;btn.textContent='تکایە چاوەڕێ بکە...';
- say('ئامادەکاری بۆ پاشەکەوتکردن و سڕینەوە...');
  try{
-  const employeeBackup=await db.from('employees').select('*');
-  if(employeeBackup.error)throw employeeBackup.error;
-  const backup={created_at:new Date().toISOString(),employees:employeeBackup.data||[],leave_employees:EL,permission_employees:EP,long_leave_employees:ET,leave_records:L,daily_permissions:P,long_term_leaves:T};
-  const url=URL.createObjectURL(new Blob([JSON.stringify(backup,null,2)],{type:'application/json'}));
-  const a=document.createElement('a');a.href=url;a.download='mollat-system-backup-before-delete-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),3000);
-  const result=await db.rpc('clear_business_data');
-  if(result.error)throw result.error;
+  const tableNames=['employees','leave_employees','permission_employees','long_leave_employees','leave_records','daily_permissions','long_term_leaves'];
+  const backupRows={};
+  for(const table of tableNames){
+   const r=await db.from(table).select('*');
+   if(r.error)throw new Error('نەتوانرا پاشەکەوتی '+table+' وەربگیرێت: '+r.error.message);
+   backupRows[table]=r.data||[];
+  }
+  const backup={created_at:new Date().toISOString(),...backupRows};
+  const blobUrl=URL.createObjectURL(new Blob([JSON.stringify(backup,null,2)],{type:'application/json'}));
+  const link=document.createElement('a');link.href=blobUrl;link.download='mollat-system-backup-before-delete-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(blobUrl),5000);
+  const emptyUuid='00000000-0000-0000-0000-000000000000';
+  const deleted={};
+  for(const table of ['leave_records','daily_permissions','long_term_leaves','leave_employees','permission_employees','long_leave_employees','employees']){
+   const result=await db.from(table).delete().neq('id',emptyUuid).select('id');
+   if(result.error)throw new Error('هەڵە لە سڕینەوەی '+table+': '+result.error.message);
+   deleted[table]=(result.data||[]).length;
+  }
+  const remaining={};
+  for(const table of tableNames){
+   const check=await db.from(table).select('id',{count:'exact',head:true});
+   if(check.error)throw new Error('نەتوانرا سڕینەوەی '+table پشتڕاست بکرێتەوە: '+check.error.message);
+   remaining[table]=check.count??0;
+  }
+  const notEmpty=Object.entries(remaining).filter(([,n])=>n!==0);
+  if(notEmpty.length)throw new Error('هەندێک زانیاری هێشتا ماوەتەوە: '+notEmpty.map(([t,n])=>t+': '+n).join('، '));
   await load();
   if($('homeMainCode'))$('homeMainCode').value='';
   if($('homeEmpResult')){$('homeEmpResult').textContent='';$('homeEmpResult').classList.add('hidden')}
-  const counts=result.data||{};
-  say('سڕینەوەی گشتی بە سەرکەوتوویی تەواو بوو. پاشەکەوتی JSON دابەزی. ژمارەی تۆمارە سڕاوەکان: '+Object.values(counts).reduce((a,b)=>a+Number(b||0),0));
- }catch(e){console.error('Global delete failed:',e);say('سڕینەوە ئەنجام نەدرا: '+(e?.message||String(e))+'. هیچ داتایەک نابێت بەبێ سەرکەوتنی فەرمانەکە بسڕدرێتەوە.')}
+  const total=Object.values(deleted).reduce((sum,n)=>sum+Number(n||0),0);
+  say('سڕینەوەی گشتی سەرکەوتوو بوو. هەموو ٧ خشتە پشکنران و بەتاڵن. '+total+' تۆمار سڕایەوە. پاشەکەوتی JSONیش دابەزی.');
+ }catch(e){console.error('Global delete failed:',e);say('سڕینەوە بە تەواوی پشتڕاست نەکرایەوە: '+(e?.message||String(e))+'. پاشەکەوتی JSONت لەبەردەستە؛ تکایە پەیامی هەڵەکە بنێرە.')}
  finally{btn.dataset.running='0';btn.disabled=false;btn.textContent='سڕینەوەی گشتی'}
 });
+
 
 
 db.auth.getSession().then(r=>{if(r.data.session)enter(r.data.session)});
