@@ -84,7 +84,18 @@ function renderOptions(){
 }
 function resetOptionEditor(category){let prefix=category==='department'?'departmentOption':'leaveTypeOption',suffix=category==='department'?'Department':'LeaveType';$(prefix+'Id').value='';$(prefix+'Value').value='';$('add'+suffix+'Option').hidden=false;$('update'+suffix+'Option').hidden=true}
 window.selectOptionForEdit=id=>{let o=O.find(x=>x.id===id);if(!o)return;let prefix=o.category==='department'?'departmentOption':'leaveTypeOption',suffix=o.category==='department'?'Department':'LeaveType';$(prefix+'Id').value=o.id;$(prefix+'Value').value=o.value;$('add'+suffix+'Option').hidden=true;$('update'+suffix+'Option').hidden=false;$(prefix+'Value').focus()};
-async function saveOption(category,editing){let prefix=category==='department'?'departmentOption':'leaveTypeOption',suffix=category==='department'?'Department':'LeaveType',value=$(prefix+'Value').value.trim(),id=$(prefix+'Id').value;if(!value)return say('تکایە ناوی هەڵبژاردە بنووسە.');if(O.some(o=>o.id!==id&&o.category===category&&o.value.toLowerCase()===value.toLowerCase()))return say('ئەم هەڵبژاردەیە پێشتر هەیە.');let result=editing?await db.from('app_options').update({value}).eq('id',id):await db.from('app_options').insert({category,value});if(result.error)return say('کردارەکە سەرکەوتوو نەبوو: '+result.error.message);resetOptionEditor(category);await load();say(editing?'هەڵبژاردەکە نوێکرایەوە.':'هەڵبژاردەکە زیادکرا.')};
+async function saveOption(category,editing){
+ let prefix=category==='department'?'departmentOption':'leaveTypeOption',suffix=category==='department'?'Department':'LeaveType',value=$(prefix+'Value').value.trim(),id=$(prefix+'Id').value,previous=O.find(o=>o.id===id);
+ if(!value)return say('تکایە ناوی هەڵبژاردە بنووسە.');
+ if(O.some(o=>o.id!==id&&o.category===category&&o.value.toLowerCase()===value.toLowerCase()))return say('ئەم هەڵبژاردەیە پێشتر هەیە.');
+ let result=editing?await db.from('app_options').update({value}).eq('id',id):await db.from('app_options').insert({category,value});
+ if(result.error)return say('کردارەکە سەرکەوتوو نەبوو: '+result.error.message);
+ if(editing&&previous&&previous.value!==value){
+  let targets=category==='department'?[['leave_employees','department'],['permission_employees','department'],['long_leave_employees','department'],['leave_records','employee_department'],['daily_permissions','employee_department'],['long_term_leaves','employee_department']]:[['leave_employees','default_leave_type'],['leave_records','employee_default_leave_type'],['long_term_leaves','leave_type']];
+  for(const [table,column] of targets){let updated=await db.from(table).update({[column]:value}).eq(column,previous.value);if(updated.error){await load();return say('هەڵبژاردە نوێکرایەوە، بەڵام نوێکردنەوەی هەندێک تۆماری پەیوەندیدار تەواو نەبوو ('+table+'): '+updated.error.message)}}
+ }
+ resetOptionEditor(category);await load();say(editing?'هەڵبژاردەکە و هەموو تۆمارە پەیوەندیدارەکانی نوێکرانەوە.':'هەڵبژاردەکە زیادکرا و لە هەموو فۆرمە پەیوەندیدارەکاندا نوێکرایەوە.')
+};
 $('addDepartmentOption').onclick=()=>saveOption('department',false);$('updateDepartmentOption').onclick=()=>saveOption('department',true);$('cancelDepartmentOption').onclick=()=>resetOptionEditor('department');
 $('addLeaveTypeOption').onclick=()=>saveOption('leave_type',false);$('updateLeaveTypeOption').onclick=()=>saveOption('leave_type',true);$('cancelLeaveTypeOption').onclick=()=>resetOptionEditor('leave_type');
 window.removeOption=async id=>{let o=O.find(x=>x.id===id);if(!o)return;let all=[...EL,...EP,...ET],used=o.category==='department'?all.some(e=>e.department===o.value):EL.some(e=>e.default_leave_type===o.value);if(used)return say('ناتوانرێت بسڕدرێتەوە؛ لەلایەن فەرمانبەرێکەوە بەکاردەهێنرێت.');if(!confirm('دڵنیایت لە سڕینەوەی ئەم هەڵبژاردەیە؟'))return;let r=await db.from('app_options').delete().eq('id',id);if(r.error)return say('سڕینەوە سەرکەوتوو نەبوو: '+r.error.message);await load();say('هەڵبژاردە سڕایەوە.')};
