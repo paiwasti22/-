@@ -515,6 +515,90 @@ body:has(#app:not(.hidden)) #app .app-account-area{
   body:has(#app:not(.hidden)) #app .app-account-area{flex:1 1 100%;justify-content:center}
 }
 
+
+/* Refreshed login palette: deep navy, teal and restrained gold accents. */
+body:has(#login:not(.hidden)),
+body:has(#recovery:not(.hidden)){
+  background:
+    radial-gradient(ellipse at 14% 10%,rgba(43,132,145,.26),transparent 38%),
+    radial-gradient(ellipse at 88% 78%,rgba(190,151,73,.12),transparent 35%),
+    linear-gradient(135deg,#101d32 0%,#172b43 52%,#203b50 100%)!important;
+}
+body:has(#login:not(.hidden)) .institution-heading,
+body:has(#recovery:not(.hidden)) .institution-heading{
+  background:linear-gradient(115deg,rgba(21,40,61,.98) 0%,rgba(30,60,79,.97) 100%)!important;
+  border:1px solid rgba(150,185,196,.42)!important;
+  border-top:3px solid #c5a45d!important;
+  border-right:0!important;
+  box-shadow:0 12px 30px rgba(0,0,0,.2)!important;
+}
+body:has(#login:not(.hidden)) .institution-lines,
+body:has(#recovery:not(.hidden)) .institution-lines{
+  color:#f0f5f7!important;
+  text-shadow:0 1px 2px rgba(0,0,0,.18);
+}
+body:has(#login:not(.hidden)) .institution-system-title,
+body:has(#recovery:not(.hidden)) .institution-system-title{
+  color:#f5d995!important;
+  background:rgba(8,22,37,.38)!important;
+  border-top:1px solid rgba(197,164,93,.48)!important;
+}
+body:has(#login:not(.hidden)) #login.login,
+body:has(#recovery:not(.hidden)) #recovery.login{
+  color:#edf4f7!important;
+  background:linear-gradient(150deg,#20364d 0%,#172a40 100%)!important;
+  border:1px solid rgba(151,184,196,.45)!important;
+  box-shadow:0 20px 48px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.06)!important;
+}
+body:has(#login:not(.hidden)) #login.login h2,
+body:has(#recovery:not(.hidden)) #recovery.login h2{
+  color:#f5f8fa!important;
+  border-bottom-color:rgba(170,197,207,.22)!important;
+}
+body:has(#login:not(.hidden)) #login.login p.muted,
+body:has(#recovery:not(.hidden)) #recovery.login p.muted{
+  color:#b9cbd4!important;
+}
+body:has(#login:not(.hidden)) #login.login .field label,
+body:has(#recovery:not(.hidden)) #recovery.login .field label{
+  color:#e2edf0!important;
+}
+body:has(#login:not(.hidden)) #login.login .field input,
+body:has(#recovery:not(.hidden)) #recovery.login .field input{
+  color:#172b40!important;
+  background:#e8f0f3!important;
+  border:1.5px solid #7897a5!important;
+}
+body:has(#login:not(.hidden)) #login.login .field input:focus,
+body:has(#recovery:not(.hidden)) #recovery.login .field input:focus{
+  background:#fff!important;
+  border-color:#5db6ad!important;
+  box-shadow:0 0 0 3px rgba(75,174,163,.2)!important;
+}
+body:has(#login:not(.hidden)) #login.login form .btn,
+body:has(#recovery:not(.hidden)) #recovery.login form .btn{
+  color:#fff!important;
+  background:linear-gradient(105deg,#187f80 0%,#279b91 100%)!important;
+  border:1px solid #48aaa0!important;
+  box-shadow:0 5px 14px rgba(9,91,91,.28)!important;
+}
+body:has(#login:not(.hidden)) #login.login form .btn:hover,
+body:has(#recovery:not(.hidden)) #recovery.login form .btn:hover{
+  filter:brightness(1.08);
+}
+body:has(#login:not(.hidden)) #forgotPassword{
+  color:#dce9ed!important;
+  background:rgba(255,255,255,.045)!important;
+  border:1px solid rgba(151,184,196,.38)!important;
+}
+body:has(#login:not(.hidden)) #forgotPassword:hover{
+  background:rgba(255,255,255,.1)!important;
+}
+body:has(#login:not(.hidden)) #loginMsg,
+body:has(#recovery:not(.hidden)) #recoveryMsg{
+  color:#f0dcae!important;
+}
+
 </style></head>
 <body>
 <div class="wrap">
