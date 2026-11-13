@@ -1210,39 +1210,54 @@ db.auth.getSession().then(r=>{if(r.data.session)enter(r.data.session)});
 </script>
 <script>
 (function(){
- var button=document.getElementById('globalDeleteBtn'),status=document.getElementById('globalDeleteStatus');
- if(!button)return;
- function report(t,bad){if(status){status.textContent=t;status.style.display='block';status.style.color=bad?'#9b2525':'#17633b';status.style.background=bad?'#fff0f0':'#eef8f1';}}
- button.addEventListener('click',async function(ev){
-  ev.preventDefault();ev.stopImmediatePropagation();
+ document.addEventListener('click',async function(ev){
+  var button=ev.target && ev.target.closest ? ev.target.closest('#globalDeleteBtn') : null;
+  if(!button)return;
+  ev.preventDefault();
+  ev.stopPropagation();
+  var status=document.getElementById('globalDeleteStatus');
+  function report(message,bad){
+   if(status){status.textContent=message;status.style.display='block';status.style.color=bad?'#9b2525':'#17633b';status.style.background=bad?'#fff0f0':'#eef8f1';}
+   else window.alert(message);
+  }
+  if(button.dataset.running==='1')return;
   var client=window.__mollatDb;
-  if(!client){report('پەیوەندی داتابەیس ئامادە نییە. پەڕەکە نوێ بکەرەوە؛ ئەگەر دووبارە بوو کۆنسۆڵ پشکنین دەوێت.',true);return;}
-  if(!window.confirm('ئاگاداری: هەموو تۆمارەکانی فەرمانبەران و مۆڵەت و سەماحی ڕۆژانە و مۆڵەتی درێژخایەن دەسڕدرێنەوە. هەژماری چوونەژوورەوە و هەڵبژاردەکان دەمێننەوە. دڵنیایت؟')){report('کردارەکە هەڵوەشێندرایەوە؛ هیچ داتایەک نەسڕایەوە.',false);return;}
-  if(window.prompt('بۆ پشتڕاستکردنەوە بنووسە: سڕینەوەی گشتی')!=='سڕینەوەی گشتی'){report('وشەی پشتڕاستکردنەوە هەڵەیە؛ هیچ داتایەک نەسڕایەوە.',true);return;}
-  button.disabled=true;var old=button.textContent;button.textContent='تکایە چاوەڕێ بکە...';
+  if(!client){report('پەیوەندی داتابەیس ئامادە نییە. تکایە جارێکی تر بچۆ ژوورەوە و پەڕەکە نوێ بکەرەوە.',true);return;}
+  var sessionResult=await client.auth.getSession();
+  if(sessionResult.error || !sessionResult.data || !sessionResult.data.session){
+   report('چوونەژوورەوە بەسەرچووە یان پەیوەندی نییە. تکایە دووبارە بچۆ ژوورەوە.',true);return;
+  }
+  if(!window.confirm('ئاگاداری گرنگ: هەموو زانیارییەکانی فەرمانبەران، مۆڵەت، سەماحی ڕۆژانە و مۆڵەتی درێژخایەن دەسڕدرێنەوە. هەژماری چوونەژوورەوە، هەڵبژاردەکان و تۆماری چاودێری دەمێننەوە. پاشەکەوتی JSON دادەبەزێت. دڵنیایت؟')){report('کردارەکە هەڵوەشێندرایەوە؛ هیچ زانیارییەک نەسڕایەوە.',false);return;}
+  if(window.prompt('بۆ پشتڕاستکردنەوە ئەم دەقە بنووسە: سڕینەوەی گشتی')!=='سڕینەوەی گشتی'){report('پشتڕاستکردنەوە دروست نەبوو؛ هیچ زانیارییەک نەسڕایەوە.',true);return;}
+  button.dataset.running='1';button.disabled=true;var oldText=button.textContent;button.textContent='تکایە چاوەڕێ بکە...';
   try{
-   var tables=['leave_employees','permission_employees','long_leave_employees','leave_records','daily_permissions','long_term_leaves'];
+   var tables=['employees','leave_employees','permission_employees','long_leave_employees','leave_records','daily_permissions','long_term_leaves'];
    var backup={created_at:new Date().toISOString(),tables:{}};
-   report('پاشەکەوتی زانیارییەکان ئامادە دەکرێت...',false);
+   report('پاشەکەوتی هەموو زانیارییەکان ئامادە دەکرێت...',false);
    for(var i=0;i<tables.length;i++){
-    var q=await client.from(tables[i]).select('*');
-    if(q.error)throw new Error('خوێندنەوەی '+tables[i]+': '+q.error.message);
-    backup.tables[tables[i]]=q.data||[];
+    var result=await client.from(tables[i]).select('*');
+    if(result.error)throw new Error('خوێندنەوەی '+tables[i]+' سەرکەوتوو نەبوو: '+result.error.message);
+    backup.tables[tables[i]]=result.data||[];
    }
-   var url=URL.createObjectURL(new Blob([JSON.stringify(backup,null,2)],{type:'application/json'}));
-   var a=document.createElement('a');a.href=url;a.download='mollat-backup-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url);},10000);
-   var order=['leave_records','daily_permissions','long_term_leaves','leave_employees','permission_employees','long_leave_employees'];
+   var blobUrl=URL.createObjectURL(new Blob([JSON.stringify(backup,null,2)],{type:'application/json'}));
+   var link=document.createElement('a');link.href=blobUrl;link.download='mollat-backup-before-delete-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(link);link.click();link.remove();setTimeout(function(){URL.revokeObjectURL(blobUrl);},15000);
+   report('پاشەکەوت ئامادە کرا. ئێستا تۆمارەکان دەسڕدرێنەوە...',false);
+   var order=['leave_records','daily_permissions','long_term_leaves','leave_employees','permission_employees','long_leave_employees','employees'];
    for(var j=0;j<order.length;j++){
-    var d=await client.from(order[j]).delete().neq('id','00000000-0000-0000-0000-000000000000').select('id');
-    if(d.error)throw new Error('سڕینەوەی '+order[j]+': '+d.error.message);
-    var c=await client.from(order[j]).select('id',{count:'exact',head:true});
-    if(c.error)throw new Error('پشکنینی '+order[j]+': '+c.error.message);
-    if(c.count!==0)throw new Error('هێشتا '+c.count+' تۆمار لە '+order[j]+' ماوەتەوە.');
+    var deleted=await client.from(order[j]).delete().not('id','is',null).select('id');
+    if(deleted.error)throw new Error('سڕینەوەی '+order[j]+' سەرکەوتوو نەبوو: '+deleted.error.message);
+    var verify=await client.from(order[j]).select('id',{count:'exact',head:true});
+    if(verify.error)throw new Error('پشکنینی '+order[j]+' سەرکەوتوو نەبوو: '+verify.error.message);
+    if(verify.count!==0)throw new Error('لە خشتەی '+order[j]+' هێشتا '+verify.count+' تۆمار ماوەتەوە.');
    }
-   report('سڕینەوەی گشتی سەرکەوتوو بوو. پاشەکەوتی JSONت بپارێزە. پەڕەکە نوێ دەکرێتەوە.',false);
+   report('سڕینەوەی گشتی بە سەرکەوتوویی تەواو بوو. پاشەکەوتی JSONت بپارێزە.',false);
    setTimeout(function(){location.reload();},1800);
-  }catch(err){console.error('Global delete error:',err);report('سڕینەوە تەواو نەبوو: '+(err&&err.message?err.message:String(err)),true);}
-  finally{button.disabled=false;button.textContent=old||'سڕینەوەی گشتی';}
+  }catch(err){
+   console.error('Global delete action failed:',err);
+   report('سڕینەوە تەواو نەبوو: '+(err&&err.message?err.message:String(err))+'. پاشەکەوتی JSONت بپارێزە و ئەم پەیامە بنێرە.',true);
+  }finally{
+   button.dataset.running='0';button.disabled=false;button.textContent=oldText||'سڕینەوەی گشتی';
+  }
  },true);
 })();
 </script>
