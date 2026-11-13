@@ -937,7 +937,7 @@ body:has(#login:not(.hidden)) #login #loginForm .field input{
 <header class="top"><div class="app-title-area"><h1>سیستەمی بەڕێوەبردنی مۆڵەت و سەماح</h1><span class="muted">داتابەیسی هاوبەشی فەرمانبەران</span></div><img class="app-institution-logo" src="https://gov.krd/media/2893/krg_logo_2480x2056.png" alt="لۆگۆی حکومەتی هەرێمی کوردستان"><div class="app-account-area"><span id="who" class="muted"></span> <button id="changeAccountEmail" type="button" class="btn gray">گۆڕینی ئیمەیڵی هەژمار</button> <button id="logout" class="btn gray">چوونەدەرەوە</button></div></header>
 <div class="layout"><nav class="nav"><button class="active" data-page="home">پوختەی گشتی</button><button data-page="printLeave">پرنتکردنی مۆڵەت</button><button data-page="printPermissions">پرنتکردنی سەماحی ڕۆژانە</button><button data-page="employees">فەرمانبەران</button><button data-page="options">بەڕێوەبردنی هەڵبژاردەکان</button><button data-page="leaves">مۆڵەت</button><button data-page="permissions">سەماحی ڕۆژانە</button><button data-page="longLeaves">مۆڵەتی درێژخایەن</button></nav>
 <main>
-<section id="home" class="page active"><div class="summary-groups"><div class="summary-group"><h3>بەشی مۆڵەت</h3><div class="summary-metrics"><div class="stat">ژمارەی فەرمانبەرانی مۆڵەت<strong id="nLeaveEmp">0</strong></div><div class="stat">ژمارەی مۆڵەتەکان<strong id="nLeave">0</strong></div></div></div><div class="summary-group"><h3>بەشی سەماحی ڕۆژانە</h3><div class="summary-metrics"><div class="stat">ژمارەی فەرمانبەرانی سەماح<strong id="nPermEmp">0</strong></div><div class="stat">ژمارەی سەماحەکان<strong id="nPerm">0</strong></div></div></div><div class="summary-group"><h3>بەشی مۆڵەتی درێژخایەن</h3><div class="summary-metrics"><div class="stat">ژمارەی فەرمانبەرانی مۆڵەتی درێژخایەن<strong id="nLongEmp">0</strong></div><div class="stat">ژمارەی مۆڵەتە درێژخایەنەکان<strong id="nLong">0</strong></div></div></div></div><div class="panel global-delete-panel"><h2>سڕینەوەی گشتی</h2><p class="muted">ئەم کردارە هەموو زانیارییە تۆمارکراوەکانی فەرمانبەران، مۆڵەت، سەماحی ڕۆژانە و مۆڵەتی درێژخایەن دەسڕێتەوە. هەڵبژاردەکان، هەژماری چوونەژوورەوە و تۆماری چاودێری دەمێننەوە.</p><button id="globalDeleteBtn" type="button" class="btn global-delete-btn" data-action="global-delete">سڕینەوەی گشتی</button><div id="globalDeleteStatus" role="status" aria-live="polite" style="display:none;margin-top:12px;padding:12px;border-radius:10px;background:#f4f7fa;font-weight:600"></div></div><div class="panel"><h2>ئاگادارکردنەوەی مۆڵەتی درێژخایەن</h2><div id="longLeaveAlerts" aria-live="polite" class="muted">هیچ ئاگادارکردنەوەیەک نییە.</div></div><div class="panel"><h2>گەڕان بە کۆدی سەرەکی فەرمانبەر</h2><form id="homeEmpSearch"><div class="field"><label for="homeMainCode">کۆدی سەرەکی</label><input id="homeMainCode" autocomplete="off" placeholder="کۆدی سەرەکی بنووسە" required></div><div class="actions"><button class="btn" type="submit">گەڕان</button><button class="btn gray" type="button" id="clearHomeSearch">پاککردنەوە</button></div></form><div id="homeEmpResult" class="msg hidden" aria-live="polite"></div></div><div class="panel"><h2>بەخێربێیت</h2><p class="muted">تۆمارەکان لە Supabase پاشەکەوت دەکرێن و لەسەر ئامێرەکانی تر بە هەمان هەژمار دەردەکەون.</p><button id="backup" class="btn">داگرتنی پاشەکەوتی JSON</button></div></section>
+<section id="home" class="page active"><div class="summary-groups"><div class="summary-group"><h3>بەشی مۆڵەت</h3><div class="summary-metrics"><div class="stat">ژمارەی فەرمانبەرانی مۆڵەت<strong id="nLeaveEmp">0</strong></div><div class="stat">ژمارەی مۆڵەتەکان<strong id="nLeave">0</strong></div></div></div><div class="summary-group"><h3>بەشی سەماحی ڕۆژانە</h3><div class="summary-metrics"><div class="stat">ژمارەی فەرمانبەرانی سەماح<strong id="nPermEmp">0</strong></div><div class="stat">ژمارەی سەماحەکان<strong id="nPerm">0</strong></div></div></div><div class="summary-group"><h3>بەشی مۆڵەتی درێژخایەن</h3><div class="summary-metrics"><div class="stat">ژمارەی فەرمانبەرانی مۆڵەتی درێژخایەن<strong id="nLongEmp">0</strong></div><div class="stat">ژمارەی مۆڵەتە درێژخایەنەکان<strong id="nLong">0</strong></div></div></div></div><div class="panel global-delete-panel"><h2>سڕینەوەی گشتی</h2><p class="muted">ئەم کردارە هەموو زانیارییە تۆمارکراوەکانی فەرمانبەران، مۆڵەت، سەماحی ڕۆژانە و مۆڵەتی درێژخایەن دەسڕێتەوە. هەڵبژاردەکان، هەژماری چوونەژوورەوە و تۆماری چاودێری دەمێننەوە.</p><button id="globalDeleteBtn" onclick="window.runGlobalDelete(event)" type="button" class="btn global-delete-btn" data-action="global-delete">سڕینەوەی گشتی</button><div id="globalDeleteStatus" role="status" aria-live="polite" style="display:none;margin-top:12px;padding:12px;border-radius:10px;background:#f4f7fa;font-weight:600"></div></div><div class="panel"><h2>ئاگادارکردنەوەی مۆڵەتی درێژخایەن</h2><div id="longLeaveAlerts" aria-live="polite" class="muted">هیچ ئاگادارکردنەوەیەک نییە.</div></div><div class="panel"><h2>گەڕان بە کۆدی سەرەکی فەرمانبەر</h2><form id="homeEmpSearch"><div class="field"><label for="homeMainCode">کۆدی سەرەکی</label><input id="homeMainCode" autocomplete="off" placeholder="کۆدی سەرەکی بنووسە" required></div><div class="actions"><button class="btn" type="submit">گەڕان</button><button class="btn gray" type="button" id="clearHomeSearch">پاککردنەوە</button></div></form><div id="homeEmpResult" class="msg hidden" aria-live="polite"></div></div><div class="panel"><h2>بەخێربێیت</h2><p class="muted">تۆمارەکان لە Supabase پاشەکەوت دەکرێن و لەسەر ئامێرەکانی تر بە هەمان هەژمار دەردەکەون.</p><button id="backup" class="btn">داگرتنی پاشەکەوتی JSON</button></div></section>
 <section id="printLeave" class="page"><div class="panel"><h2>پرنتی مۆڵەت بەپێی کۆدی سەرەکی</h2><p class="muted">کۆدی سەرەکی فەرمانبەر بنووسە؛ هەموو تۆمارەکانی مۆڵەتی ئەو کۆدە لە یەک فۆرم چاپ دەکرێن.</p><form id="printLeaveCodeForm"><div class="field"><label for="printLeaveMainCode">کۆدی سەرەکی</label><input id="printLeaveMainCode" autocomplete="off" placeholder="کۆدی سەرەکی بنووسە" required></div><div class="actions"><button class="btn" type="submit">گەڕان</button><button class="btn gray" type="button" id="clearPrintLeaveCode">پاککردنەوە</button></div></form><div id="printLeaveResult" class="msg hidden" aria-live="polite"></div></div></section>
 <section id="printPermissions" class="page"><div class="panel"><h2>پرنتکردنی سەماحی ڕۆژانە بەپێی کۆدی سەرەکی</h2><p class="muted">کۆدی سەرەکی فەرمانبەر بنووسە؛ هەموو تۆمارەکانی سەماحی ئەو فەرمانبەرە لە یەک فۆرم چاپ دەکرێن.</p><form id="printPermCodeForm"><div class="field"><label for="printPermMainCode">کۆدی سەرەکی</label><input id="printPermMainCode" autocomplete="off" placeholder="کۆدی سەرەکی بنووسە" required></div><div class="actions"><button class="btn" type="submit">گەڕان و پرنتکردن</button><button class="btn gray" type="button" id="clearPrintPermCode">پاککردنەوە</button></div></form><div id="printPermResult" class="msg hidden" aria-live="polite"></div></div></section><section id="employees" class="page">
 
@@ -1176,52 +1176,57 @@ $('backup').onclick=()=>{let a=document.createElement('a'),u=URL.createObjectURL
 
 
 
-db.auth.getSession().then(r=>{if(r.data.session)enter(r.data.session)});
-</script>
-<script>
-(function(){
- document.addEventListener('click',async function(ev){
-  var button=ev.target && ev.target.closest ? ev.target.closest('#globalDeleteBtn') : null;
-  if(!button)return;
-  ev.preventDefault();
-  ev.stopImmediatePropagation();
-  var status=document.getElementById('globalDeleteStatus');
-  function report(message,bad){
-   if(status){status.textContent=message;status.style.display='block';status.style.color=bad?'#9b2525':'#17633b';status.style.background=bad?'#fff0f0':'#eef8f1';}
-   else window.alert(message);
+db.auth.getSession().then(r=>{if(r.data.ses<script>
+window.runGlobalDelete = async function(ev){
+ if(ev){ev.preventDefault();ev.stopPropagation();}
+ var button=document.getElementById('globalDeleteBtn');
+ var status=document.getElementById('globalDeleteStatus');
+ function report(message,bad){
+  if(status){status.textContent=message;status.style.display='block';status.style.color=bad?'#9b2525':'#17633b';status.style.background=bad?'#fff0f0':'#eef8f1';}
+  else window.alert(message);
+ }
+ if(window.__globalDeleteRunning)return;
+ window.__globalDeleteRunning=true;
+ if(button){button.disabled=true;button.textContent='تکایە چاوەڕێ بکە...';}
+ report('دوگمەکە کار دەکات؛ پشکنینی پەیوەندی و ئامادەکردنی پاشەکەوت دەکرێت...',false);
+ try{
+  var client=window.__mollatDb;
+  if(!client)throw new Error('پەیوەندی Supabase نەدۆزرایەوە. تکایە جارێکی تر بچۆ ژوورەوە.');
+  var auth=await client.auth.getSession();
+  if(auth.error)throw auth.error;
+  if(!auth.data||!auth.data.session)throw new Error('چوونەژوورەوە بەسەرچووە؛ دووبارە بچۆ ژوورەوە.');
+  if(!window.confirm('ئاگاداری گرنگ: هەموو زانیارییەکانی فەرمانبەران و مۆڵەت و سەماحی ڕۆژانە و مۆڵەتی درێژخایەن دەسڕدرێنەوە. هەژماری چوونەژوورەوە و هەڵبژاردەکان دەمێننەوە. دڵنیایت؟')){report('کردارەکە هەڵوەشێندرایەوە؛ هیچ زانیارییەک نەسڕایەوە.',false);return;}
+  if(window.prompt('بۆ پشتڕاستکردنەوە بنووسە: سڕینەوەی گشتی')!=='سڕینەوەی گشتی')throw new Error('وشەی پشتڕاستکردنەوە هەڵەیە؛ هیچ زانیارییەک نەسڕایەوە.');
+  var names=['employees','leave_employees','permission_employees','long_leave_employees','leave_records','daily_permissions','long_term_leaves'];
+  var backup={created_at:new Date().toISOString(),tables:{}};
+  report('پاشەکەوتی هەموو زانیارییەکان ئامادە دەکرێت...',false);
+  for(var i=0;i<names.length;i++){
+   var read=await client.from(names[i]).select('*');
+   if(read.error)throw new Error('خوێندنەوەی '+names[i]+': '+read.error.message);
+   backup.tables[names[i]]=read.data||[];
   }
-  try{
-   var client=window.__mollatDb;
-   if(!client)throw new Error('پەیوەندی Supabase نەدۆزرایەوە؛ جارێکی تر بچۆ ژوورەوە.');
-   var auth=await client.auth.getSession();
-   if(auth.error||!auth.data||!auth.data.session)throw new Error('چوونەژوورەوە بەسەرچووە؛ دووبارە بچۆ ژوورەوە.');
-   if(!window.confirm('ئاگاداری: زانیاری هەموو فەرمانبەران، مۆڵەت، سەماحی ڕۆژانە و مۆڵەتی درێژخایەن دەسڕدرێتەوە. هەژمار، هەڵبژاردە و تۆماری چاودێری دەمێننەوە. دڵنیایت؟'))return;
-   if(window.prompt('بۆ پشتڕاستکردنەوە بنووسە: سڕینەوەی گشتی')!=='سڕینەوەی گشتی')throw new Error('دەقی پشتڕاستکردنەوە دروست نەبوو؛ هیچ زانیارییەک نەسڕایەوە.');
-   button.disabled=true;var old=button.textContent;button.textContent='تکایە چاوەڕێ بکە...';
-   var names=['leave_records','daily_permissions','long_term_leaves','leave_employees','permission_employees','long_leave_employees','employees'];
-   var backup={created_at:new Date().toISOString(),tables:{}};
-   report('پاشەکەوتی زانیارییەکان ئامادە دەکرێت...',false);
-   for(var i=0;i<names.length;i++){
-    var read=await client.from(names[i]).select('*');
-    if(read.error)throw new Error('خوێندنەوەی '+names[i]+': '+read.error.message);
-    backup.tables[names[i]]=read.data||[];
-   }
-   var url=URL.createObjectURL(new Blob([JSON.stringify(backup,null,2)],{type:'application/json'}));
-   var a=document.createElement('a');a.href=url;a.download='mollat-backup-before-delete-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url);},15000);
-   var order=['leave_records','daily_permissions','long_term_leaves','leave_employees','permission_employees','long_leave_employees','employees'];
-   for(var j=0;j<order.length;j++){
-    var del=await client.from(order[j]).delete().not('id','is',null).select('id');
-    if(del.error)throw new Error('سڕینەوەی '+order[j]+': '+del.error.message);
-    var count=await client.from(order[j]).select('id',{count:'exact',head:true});
-    if(count.error)throw new Error('پشکنینی '+order[j]+': '+count.error.message);
-    if(count.count!==0)throw new Error(order[j]+': '+count.count+' تۆمار هێشتا ماوەتەوە.');
-   }
-   report('سڕینەوەی گشتی بە سەرکەوتوویی تەواو بوو. پاشەکەوتەکە بپارێزە.',false);
-   setTimeout(function(){location.reload();},1800);
-  }catch(err){
-   console.error('Global delete:',err);
-   report('فەرمانەکە جێبەجێ نەبوو: '+(err&&err.message?err.message:String(err)),true);
-  }finally{button.disabled=false;button.textContent='سڕینەوەی گشتی';}
+  var url=URL.createObjectURL(new Blob([JSON.stringify(backup,null,2)],{type:'application/json'}));
+  var a=document.createElement('a');a.href=url;a.download='mollat-backup-before-delete-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url);},15000);
+  report('پاشەکەوت دروست کرا و دابەزێندرا. سڕینەوە دەستی پێکرد...',false);
+  var order=['leave_records','daily_permissions','long_term_leaves','leave_employees','permission_employees','long_leave_employees','employees'];
+  for(var j=0;j<order.length;j++){
+   var del=await client.from(order[j]).delete().not('id','is',null).select('id');
+   if(del.error)throw new Error('سڕینەوەی '+order[j]+': '+del.error.message);
+   var verify=await client.from(order[j]).select('id',{count:'exact',head:true});
+   if(verify.error)throw new Error('پشکنینی '+order[j]+': '+verify.error.message);
+   if(verify.count!==0)throw new Error('لە خشتەی '+order[j]+' هێشتا '+verify.count+' تۆمار ماوەتەوە.');
+  }
+  report('سڕینەوەی گشتی بە سەرکەوتوویی تەواو بوو. پاشەکەوتی JSONت بپارێزە.',false);
+  setTimeout(function(){location.reload();},1800);
+ }catch(err){
+  console.error('Global delete failed:',err);
+  report('فەرمانی سڕینەوە جێبەجێ نەبوو: '+(err&&err.message?err.message:String(err)),true);
+ }finally{
+  window.__globalDeleteRunning=false;
+  if(button){button.disabled=false;button.textContent='سڕینەوەی گشتی';}
+ }
+};
+</script>ینەوەی گشتی';}
  },true);
 })();
 </script>
