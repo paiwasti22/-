@@ -186,12 +186,13 @@ function renderOptions(){
  $('departmentOptionSelect').innerHTML='<option value="">هۆبە هەڵبژێرە</option>'+O.filter(o=>o.category==='department').map(o=>'<option value="'+esc(o.id)+'">'+esc(o.value)+'</option>').join('');
  $('leaveTypeOptionSelect').innerHTML='<option value="">جۆری مۆڵەت هەڵبژێرە</option>'+O.filter(o=>o.category==='leave_type').map(o=>'<option value="'+esc(o.id)+'">'+esc(o.value)+'</option>').join('');
 }
-function syncOptionEditor(category){let prefix=category==='department'?'departmentOption':'leaveTypeOption',value=$(prefix+'Value').value.trim(),found=O.find(o=>o.category===category&&o.value.toLowerCase()===value.toLowerCase());$(prefix+'Id').value=found?found.id:''}
+function syncOptionEditor(category){let prefix=category==='department'?'departmentOption':'leaveTypeOption',chooser=$(category==='department'?'departmentOptionSelect':'leaveTypeOptionSelect'),value=$(prefix+'Value').value.trim(),chosenId=chooser?chooser.value:'',found=O.find(o=>o.id===chosenId&&o.category===category)||O.find(o=>o.category===category&&o.value.toLowerCase()===value.toLowerCase());$(prefix+'Id').value=found?found.id:''}
 function resetOptionEditor(category){let prefix=category==='department'?'departmentOption':'leaveTypeOption';$(prefix+'Id').value='';$(prefix+'Value').value='';let chooser=$(category==='department'?'departmentOptionSelect':'leaveTypeOptionSelect');if(chooser)chooser.value=''}
 window.selectOptionForEdit=id=>{let o=O.find(x=>x.id===id);if(!o)return;let prefix=o.category==='department'?'departmentOption':'leaveTypeOption';$(prefix+'Value').value=o.value;let chooser=$(o.category==='department'?'departmentOptionSelect':'leaveTypeOptionSelect');if(chooser)chooser.value=o.id;syncOptionEditor(o.category);$(prefix+'Value').focus()};
 async function saveOption(category,editing){
  let prefix=category==='department'?'departmentOption':'leaveTypeOption',suffix=category==='department'?'Department':'LeaveType',value=$(prefix+'Value').value.trim(),id=$(prefix+'Id').value,previous=O.find(o=>o.id===id);
  if(!value)return say('تکایە ناوی هەڵبژاردە بنووسە.');
+ if(editing&&(!id||!previous||previous.category!==category))return say('تکایە سەرەتا هەڵبژاردەی پێشوو لە لیستەکە هەڵبژێرە، پاشان دەستکاری بکە.');
  if(O.some(o=>o.id!==id&&o.category===category&&o.value.toLowerCase()===value.toLowerCase()))return say('ئەم هەڵبژاردەیە پێشتر هەیە.');
  let result=editing?await db.from('app_options').update({value}).eq('id',id):await db.from('app_options').insert({category,value});
  if(result.error)return say('کردارەکە سەرکەوتوو نەبوو: '+result.error.message);
