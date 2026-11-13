@@ -99,12 +99,14 @@ tbody tr:hover{background:#d9e9f3!important}
 .institution-heading{
   display:none;
   position:relative;
-  width:calc(100% - 48px);
+  direction:ltr;
+  display:none;
+  width:100%;
   min-height:190px;
-  margin:20px 24px 0;
-  padding:14px 20px 14px 220px;
-  text-align:right;
-  direction:rtl;
+  margin:0 0 0 auto;
+  padding:14px 18px;
+  box-sizing:border-box;
+  text-align:center;
   color:#173653;
   font-family:'Noto Sans Arabic','Segoe UI',Tahoma,Arial,sans-serif;
   font-size:clamp(15px,1.35vw,19px);
@@ -116,13 +118,25 @@ tbody tr:hover{background:#d9e9f3!important}
   border-right:5px solid #176b78;
   border-radius:14px;
   box-shadow:0 5px 16px rgba(19,48,78,.10);
+  display:grid;
+  grid-template-columns:190px minmax(0,1fr);
+  align-items:start;
+  column-gap:14px;
 }
-.institution-lines{width:100%;text-align:center;margin:0 auto 0 0}
+.institution-lines{
+  grid-column:2;
+  grid-row:1;
+  width:100%;
+  direction:rtl;
+  text-align:center;
+  justify-self:stretch;
+  margin:0;
+}
 .institution-logo{
-  position:absolute;
-  left:18px;
-  top:14px;
-  transform:none;
+  grid-column:1;
+  grid-row:1;
+  justify-self:start;
+  align-self:start;
   width:clamp(150px,14vw,190px);
   height:auto;
   max-height:180px;
@@ -140,9 +154,9 @@ tbody tr:hover{background:#d9e9f3!important}
 body:has(#login:not(.hidden)) .institution-heading,
 body:has(#recovery:not(.hidden)) .institution-heading{display:block}
 @media(max-width:600px){
-  .institution-heading{width:calc(100% - 24px);margin:12px 12px 0;padding:12px 12px 12px 88px;font-size:13px;line-height:1.8;border-radius:11px;min-height:160px}
-  .institution-lines{width:100%;text-align:center;margin:0 auto 0 0}
-  .institution-logo{left:8px;top:12px;transform:none;width:74px;max-height:94px}
+  .institution-heading{width:100%;margin:0;padding:12px 10px;font-size:13px;line-height:1.8;border-radius:11px;min-height:150px;grid-template-columns:76px minmax(0,1fr);column-gap:8px}
+  .institution-lines{grid-column:2;grid-row:1;width:100%;text-align:center}
+  .institution-logo{grid-column:1;grid-row:1;width:72px;max-height:94px}
   .institution-system-title{margin-top:6px;padding-top:6px}
 }
 /* Login and password-recovery page: deeper, balanced blue background */
