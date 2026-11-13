@@ -471,6 +471,50 @@ body:has(#app:not(.hidden)) #app .top{
   body:has(#app:not(.hidden)) #app .app-institution-logo{left:10px;width:58px;height:56px}
 }
 
+
+/* Clearer signed-in header: title, larger KRG logo, then account controls. */
+body:has(#app:not(.hidden)) #app .top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:22px;
+  min-height:116px;
+  padding:16px 22px;
+}
+body:has(#app:not(.hidden)) #app .app-title-area{
+  flex:1 1 0;
+  min-width:0;
+}
+body:has(#app:not(.hidden)) #app .app-institution-logo{
+  position:static;
+  flex:0 0 104px;
+  transform:none;
+  width:104px;
+  height:96px;
+  max-width:100%;
+  object-fit:contain;
+  padding:7px;
+  background:#fff;
+  border:1px solid rgba(255,255,255,.72);
+  border-radius:13px;
+  box-shadow:0 3px 12px rgba(0,0,0,.2);
+}
+body:has(#app:not(.hidden)) #app .app-account-area{
+  flex:1 1 0;
+  min-width:0;
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:9px;
+  flex-wrap:wrap;
+}
+@media(max-width:700px){
+  body:has(#app:not(.hidden)) #app .top{gap:12px;padding:13px;min-height:unset;flex-wrap:wrap}
+  body:has(#app:not(.hidden)) #app .app-title-area{flex:1 1 calc(100% - 92px)}
+  body:has(#app:not(.hidden)) #app .app-institution-logo{flex:0 0 78px;width:78px;height:74px;padding:5px}
+  body:has(#app:not(.hidden)) #app .app-account-area{flex:1 1 100%;justify-content:center}
+}
+
 </style></head>
 <body>
 <div class="wrap">
@@ -488,7 +532,7 @@ body:has(#app:not(.hidden)) #app .top{
 <section id="login" class="login"><h2>چوونەژوورەوە</h2><p class="muted">بە هەژماری ڕێگەپێدراو بچۆ ژوورەوە.</p>
 <form id="loginForm" onsubmit="if(!window.__loginHandlerReady){event.preventDefault();document.getElementById('loginMsg').textContent='فەرمانی چوونەژوورەوە چالاک نەبوو؛ پەڕەکە بە تەواوی بارنەبوو. تکایە پەڕەکە نوێ بکەرەوە.';return false}"><div class="field"><label>ئیمەیڵ</label><input id="email" type="email" required autocomplete="username"></div><div class="field"><label>وشەی نهێنی</label><input id="password" type="password" required autocomplete="current-password"></div><button class="btn">چوونەژوورەوە</button></form><button type="button" class="btn gray" id="forgotPassword" style="margin-top:10px">وشەی نهێنیم لەبیرچووە</button><p id="loginMsg" class="muted"></p></section><section id="recovery" class="login hidden"><h2>دانانی وشەی نهێنی نوێ</h2><form id="recoveryForm"><div class="field"><label>وشەی نهێنی نوێ</label><input id="newPassword" type="password" minlength="8" required autocomplete="new-password"></div><div class="field"><label>دووبارەکردنەوەی وشەی نهێنی</label><input id="confirmPassword" type="password" minlength="8" required autocomplete="new-password"></div><button class="btn">پاشەکەوتکردنی وشەی نهێنی</button></form><p id="recoveryMsg" class="muted"></p></section>
 <section id="app" class="hidden">
-<header class="top"><div><h1>سیستەمی بەڕێوەبردنی مۆڵەت و سەماح</h1><span class="muted">داتابەیسی هاوبەشی فەرمانبەران</span></div><div><span id="who" class="muted"></span> <button id="changeAccountEmail" type="button" class="btn gray">گۆڕینی ئیمەیڵی هەژمار</button> <button id="logout" class="btn gray">چوونەدەرەوە</button></div><img class="app-institution-logo" src="https://gov.krd/media/2893/krg_logo_2480x2056.png" alt="لۆگۆی حکومەتی هەرێمی کوردستان"></header>
+<header class="top"><div class="app-title-area"><h1>سیستەمی بەڕێوەبردنی مۆڵەت و سەماح</h1><span class="muted">داتابەیسی هاوبەشی فەرمانبەران</span></div><img class="app-institution-logo" src="https://gov.krd/media/2893/krg_logo_2480x2056.png" alt="لۆگۆی حکومەتی هەرێمی کوردستان"><div class="app-account-area"><span id="who" class="muted"></span> <button id="changeAccountEmail" type="button" class="btn gray">گۆڕینی ئیمەیڵی هەژمار</button> <button id="logout" class="btn gray">چوونەدەرەوە</button></div></header>
 <div class="layout"><nav class="nav"><button class="active" data-page="home">پوختەی گشتی</button><button data-page="printLeave">پرنتکردنی مۆڵەت</button><button data-page="printPermissions">پرنتکردنی سەماحی ڕۆژانە</button><button data-page="employees">فەرمانبەران</button><button data-page="options">بەڕێوەبردنی هەڵبژاردەکان</button><button data-page="leaves">مۆڵەت</button><button data-page="permissions">سەماحی ڕۆژانە</button><button data-page="longLeaves">مۆڵەتی درێژخایەن</button></nav>
 <main>
 <section id="home" class="page active"><div class="summary-groups"><div class="summary-group"><h3>بەشی مۆڵەت</h3><div class="summary-metrics"><div class="stat">ژمارەی فەرمانبەرانی مۆڵەت<strong id="nLeaveEmp">0</strong></div><div class="stat">ژمارەی مۆڵەتەکان<strong id="nLeave">0</strong></div></div></div><div class="summary-group"><h3>بەشی سەماحی ڕۆژانە</h3><div class="summary-metrics"><div class="stat">ژمارەی فەرمانبەرانی سەماح<strong id="nPermEmp">0</strong></div><div class="stat">ژمارەی سەماحەکان<strong id="nPerm">0</strong></div></div></div><div class="summary-group"><h3>بەشی مۆڵەتی درێژخایەن</h3><div class="summary-metrics"><div class="stat">ژمارەی فەرمانبەرانی مۆڵەتی درێژخایەن<strong id="nLongEmp">0</strong></div><div class="stat">ژمارەی مۆڵەتە درێژخایەنەکان<strong id="nLong">0</strong></div></div></div></div><div class="panel"><h2>ئاگادارکردنەوەی مۆڵەتی درێژخایەن</h2><div id="longLeaveAlerts" aria-live="polite" class="muted">هیچ ئاگادارکردنەوەیەک نییە.</div></div><div class="panel"><h2>گەڕان بە کۆدی سەرەکی فەرمانبەر</h2><form id="homeEmpSearch"><div class="field"><label for="homeMainCode">کۆدی سەرەکی</label><input id="homeMainCode" autocomplete="off" placeholder="کۆدی سەرەکی بنووسە" required></div><div class="actions"><button class="btn" type="submit">گەڕان</button><button class="btn gray" type="button" id="clearHomeSearch">پاککردنەوە</button></div></form><div id="homeEmpResult" class="msg hidden" aria-live="polite"></div></div><div class="panel"><h2>بەخێربێیت</h2><p class="muted">تۆمارەکان لە Supabase پاشەکەوت دەکرێن و لەسەر ئامێرەکانی تر بە هەمان هەژمار دەردەکەون.</p><button id="backup" class="btn">داگرتنی پاشەکەوتی JSON</button></div></section>
