@@ -293,6 +293,155 @@ body:has(#recovery:not(.hidden)) #recovery.login{
   }
 }
 
+
+/* Final login layout fix: keep the form below the institutional heading */
+body:has(#login:not(.hidden)),
+body:has(#recovery:not(.hidden)){
+  min-height:100vh;
+  overflow-x:hidden;
+  background:linear-gradient(145deg,#f7faff 0%,#e8f0f8 100%)!important;
+}
+body:has(#login:not(.hidden)) .wrap,
+body:has(#recovery:not(.hidden)) .wrap{
+  width:100%;
+  max-width:none;
+  margin:0;
+  padding:0 0 42px;
+}
+body:has(#login:not(.hidden)) .institution-heading,
+body:has(#recovery:not(.hidden)) .institution-heading{
+  min-height:0;
+  height:auto;
+  padding:24px 4.5% 20px;
+  margin:0;
+  grid-template-columns:minmax(220px,1fr) minmax(0,1fr);
+  column-gap:28px;
+  align-items:start;
+  border-radius:0 0 18px 18px;
+  border:1px solid #c2d1e0;
+  border-top:3px solid #8ba7c2;
+  border-right:0;
+  background:linear-gradient(120deg,#fff 0%,#eef4fb 100%);
+  box-shadow:0 5px 18px rgba(28,57,87,.08);
+}
+body:has(#login:not(.hidden)) .institution-logo,
+body:has(#recovery:not(.hidden)) .institution-logo{
+  width:clamp(145px,13vw,205px);
+  max-height:220px;
+  margin:4px 0 0 8%;
+  justify-self:start;
+}
+body:has(#login:not(.hidden)) .institution-lines,
+body:has(#recovery:not(.hidden)) .institution-lines{
+  font-size:clamp(16px,1.45vw,22px);
+  line-height:1.85;
+  text-align:center;
+  justify-self:stretch;
+  padding:0 2%;
+}
+body:has(#login:not(.hidden)) .institution-system-title,
+body:has(#recovery:not(.hidden)) .institution-system-title{
+  margin:12px -2% 0;
+  width:104%;
+  padding:10px 8px;
+  border-top:1px solid #c4d3e2;
+  background:rgba(222,234,246,.72);
+  text-align:center;
+}
+body:has(#login:not(.hidden)) #login.login,
+body:has(#recovery:not(.hidden)) #recovery.login{
+  position:relative;
+  z-index:1;
+  width:min(590px,calc(100% - 36px));
+  min-height:0;
+  margin:28px auto 0;
+  padding:28px 34px 30px;
+  border:1px solid #c5d3e1!important;
+  border-radius:18px;
+  background:linear-gradient(155deg,#fff 0%,#f8fbff 100%)!important;
+  box-shadow:0 12px 30px rgba(28,57,87,.13)!important;
+}
+body:has(#login:not(.hidden)) #login.login h2,
+body:has(#recovery:not(.hidden)) #recovery.login h2{
+  margin:0 0 10px;
+  padding-bottom:12px;
+  border-bottom:1px solid #e0e8f1;
+  font-size:23px;
+}
+body:has(#login:not(.hidden)) #login.login .field,
+body:has(#recovery:not(.hidden)) #recovery.login .field{margin:16px 0}
+body:has(#login:not(.hidden)) #login.login .field label,
+body:has(#recovery:not(.hidden)) #recovery.login .field label{
+  display:block;
+  margin-bottom:7px;
+  color:#173b60;
+  font-size:14px;
+}
+body:has(#login:not(.hidden)) #login.login .field input,
+body:has(#recovery:not(.hidden)) #recovery.login .field input{
+  min-height:48px;
+  padding:11px 13px;
+  border:1.5px solid #9bb0c7!important;
+  border-radius:10px;
+  outline:none;
+  transition:border-color .18s,box-shadow .18s;
+}
+body:has(#login:not(.hidden)) #login.login .field input:focus,
+body:has(#recovery:not(.hidden)) #recovery.login .field input:focus{
+  border-color:#326b9d!important;
+  box-shadow:0 0 0 3px rgba(50,107,157,.13);
+}
+body:has(#login:not(.hidden)) #login.login form .btn,
+body:has(#recovery:not(.hidden)) #recovery.login form .btn{
+  width:100%;
+  min-height:46px;
+  margin-top:8px;
+  border-radius:10px;
+  font-weight:700;
+}
+body:has(#login:not(.hidden)) #forgotPassword{
+  width:100%;
+  min-height:42px;
+  margin-top:10px!important;
+  border:1px solid #d5e0eb;
+  border-radius:10px;
+}
+body:has(#login:not(.hidden)) #loginMsg,
+body:has(#recovery:not(.hidden)) #recoveryMsg{margin:12px 0 0}
+@media(max-width:700px){
+  body:has(#login:not(.hidden)) .institution-heading,
+  body:has(#recovery:not(.hidden)) .institution-heading{
+    padding:16px 12px;
+    grid-template-columns:88px minmax(0,1fr);
+    column-gap:10px;
+  }
+  body:has(#login:not(.hidden)) .institution-logo,
+  body:has(#recovery:not(.hidden)) .institution-logo{
+    width:82px;
+    max-height:105px;
+    margin:4px 0 0;
+  }
+  body:has(#login:not(.hidden)) .institution-lines,
+  body:has(#recovery:not(.hidden)) .institution-lines{
+    font-size:12px;
+    line-height:1.85;
+    padding:0;
+  }
+  body:has(#login:not(.hidden)) .institution-system-title,
+  body:has(#recovery:not(.hidden)) .institution-system-title{
+    margin:8px -1% 0;
+    width:102%;
+    padding:8px 3px;
+    font-size:1em;
+  }
+  body:has(#login:not(.hidden)) #login.login,
+  body:has(#recovery:not(.hidden)) #recovery.login{
+    width:calc(100% - 28px);
+    margin:20px auto 0;
+    padding:22px 17px 24px;
+  }
+}
+
 </style></head>
 <body>
 <div class="wrap">
