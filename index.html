@@ -599,6 +599,101 @@ body:has(#recovery:not(.hidden)) #recoveryMsg{
   color:#f0dcae!important;
 }
 
+
+/* Softer, brighter login colors with a clearer and larger government logo. */
+body:has(#login:not(.hidden)),
+body:has(#recovery:not(.hidden)){
+  background:
+    radial-gradient(ellipse at 14% 10%,rgba(79,159,166,.22),transparent 40%),
+    radial-gradient(ellipse at 88% 78%,rgba(204,171,105,.13),transparent 36%),
+    linear-gradient(135deg,#d9e5ed 0%,#cbdce5 52%,#dce7ec 100%)!important;
+}
+body:has(#login:not(.hidden)) .institution-heading,
+body:has(#recovery:not(.hidden)) .institution-heading{
+  background:linear-gradient(115deg,#eaf2f5 0%,#d8e7eb 100%)!important;
+  border:1px solid #a9c2ca!important;
+  border-top:3px solid #b99a5a!important;
+  box-shadow:0 12px 28px rgba(31,62,78,.15)!important;
+}
+body:has(#login:not(.hidden)) .institution-logo,
+body:has(#recovery:not(.hidden)) .institution-logo{
+  width:clamp(175px,15vw,245px)!important;
+  max-height:260px!important;
+  padding:9px;
+  background:rgba(255,255,255,.88);
+  border:1px solid rgba(255,255,255,.95);
+  border-radius:16px;
+  box-shadow:0 8px 22px rgba(23,49,64,.18);
+}
+body:has(#login:not(.hidden)) .institution-lines,
+body:has(#recovery:not(.hidden)) .institution-lines{
+  color:#203f55!important;
+  text-shadow:none!important;
+}
+body:has(#login:not(.hidden)) .institution-system-title,
+body:has(#recovery:not(.hidden)) .institution-system-title{
+  color:#315b69!important;
+  background:rgba(255,255,255,.55)!important;
+  border-top:1px solid #b7cbd0!important;
+}
+body:has(#login:not(.hidden)) #login.login,
+body:has(#recovery:not(.hidden)) #recovery.login{
+  color:#20384a!important;
+  background:linear-gradient(150deg,#eaf1f4 0%,#dce7ec 100%)!important;
+  border:1px solid #a9bec8!important;
+  box-shadow:0 18px 42px rgba(29,58,73,.2),inset 0 1px 0 rgba(255,255,255,.75)!important;
+}
+body:has(#login:not(.hidden)) #login.login h2,
+body:has(#recovery:not(.hidden)) #recovery.login h2{
+  color:#203f55!important;
+  border-bottom-color:#c4d4d9!important;
+}
+body:has(#login:not(.hidden)) #login.login p.muted,
+body:has(#recovery:not(.hidden)) #recovery.login p.muted{
+  color:#617985!important;
+}
+body:has(#login:not(.hidden)) #login.login .field label,
+body:has(#recovery:not(.hidden)) #recovery.login .field label{
+  color:#294d60!important;
+}
+body:has(#login:not(.hidden)) #login.login .field input,
+body:has(#recovery:not(.hidden)) #recovery.login .field input{
+  color:#20384a!important;
+  background:#f8fbfc!important;
+  border:1.5px solid #9db6c0!important;
+}
+body:has(#login:not(.hidden)) #login.login .field input:focus,
+body:has(#recovery:not(.hidden)) #recovery.login .field input:focus{
+  background:#fff!important;
+  border-color:#3d9993!important;
+  box-shadow:0 0 0 3px rgba(61,153,147,.16)!important;
+}
+body:has(#login:not(.hidden)) #login.login form .btn,
+body:has(#recovery:not(.hidden)) #recovery.login form .btn{
+  color:#fff!important;
+  background:linear-gradient(105deg,#287f83 0%,#399b91 100%)!important;
+  border:1px solid #68aaa4!important;
+  box-shadow:0 5px 13px rgba(36,111,109,.2)!important;
+}
+body:has(#login:not(.hidden)) #forgotPassword{
+  color:#365866!important;
+  background:rgba(255,255,255,.58)!important;
+  border:1px solid #b8cbd1!important;
+}
+body:has(#login:not(.hidden)) #loginMsg,
+body:has(#recovery:not(.hidden)) #recoveryMsg{
+  color:#8a682d!important;
+}
+@media(max-width:700px){
+  body:has(#login:not(.hidden)) .institution-logo,
+  body:has(#recovery:not(.hidden)) .institution-logo{
+    width:104px!important;
+    max-height:132px!important;
+    padding:5px;
+    border-radius:12px;
+  }
+}
+
 </style></head>
 <body>
 <div class="wrap">
