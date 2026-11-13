@@ -98,10 +98,11 @@ tbody tr:hover{background:#d9e9f3!important}
 /* Official institutional heading on the login screen */
 .institution-heading{
   display:none;
+  position:relative;
   width:min(100%,1400px);
   margin:24px auto 0;
-  padding:18px 24px;
-  text-align:right;
+  padding:18px 150px;
+  text-align:center;
   direction:rtl;
   color:#173653;
   font-family:'Noto Sans Arabic','Segoe UI',Tahoma,Arial,sans-serif;
@@ -109,11 +110,23 @@ tbody tr:hover{background:#d9e9f3!important}
   font-weight:600;
   line-height:1.9;
   letter-spacing:0;
-  background:linear-gradient(135deg,rgba(255,255,255,.94),rgba(232,241,250,.92));
+  background:linear-gradient(135deg,rgba(255,255,255,.96),rgba(232,241,250,.94));
   border:1px solid #a9bfd4;
   border-right:5px solid #176b78;
   border-radius:14px;
   box-shadow:0 5px 16px rgba(19,48,78,.10);
+}
+.institution-lines{width:100%;text-align:center}
+.institution-logo{
+  position:absolute;
+  left:22px;
+  top:50%;
+  transform:translateY(-50%);
+  width:clamp(82px,9vw,118px);
+  height:auto;
+  max-height:138px;
+  object-fit:contain;
+  display:block;
 }
 .institution-system-title{
   margin-top:8px;
@@ -126,7 +139,9 @@ tbody tr:hover{background:#d9e9f3!important}
 body:has(#login:not(.hidden)) .institution-heading,
 body:has(#recovery:not(.hidden)) .institution-heading{display:block}
 @media(max-width:600px){
-  .institution-heading{margin:12px auto 0;padding:13px 14px;font-size:14px;line-height:1.85;border-radius:11px}
+  .institution-heading{margin:12px auto 0;padding:12px 12px 12px 76px;font-size:13px;line-height:1.85;border-radius:11px;min-height:150px}
+  .institution-logo{left:8px;top:12px;transform:none;width:62px;max-height:78px}
+  .institution-system-title{margin-top:6px;padding-top:6px}
 }
 /* Login and password-recovery page: deeper, balanced blue background */
 body:has(#login:not(.hidden)),
@@ -151,12 +166,15 @@ body:has(#recovery:not(.hidden)){
 <body>
 <div class="wrap">
 <div id="institutionHeader" class="institution-heading" aria-label="ناونیشانی فەرمی دامەزراوە">
+  <img class="institution-logo" src="https://gov.krd/media/2893/krg_logo_2480x2056.png" alt="لۆگۆی فەرمی حکومەتی هەرێمی کوردستان">
+  <div class="institution-lines">
   <div>حکومەتی هەرێمی کوردستان - عێراق</div>
   <div>سەرۆکایەتی ئەنجومەنی وەزیران</div>
   <div>وەزارەتی شارەوانی و گەشتوگوزار</div>
   <div>بەڕێوەبەرایەتی گشتی ئاو و ئاوەڕۆ</div>
   <div>بەڕێوەبەرایەتی ئاوی دەوروبەری سلێمانی</div>
   <div class="institution-system-title">( سیستەمی بەڕێوەبردنی مۆڵەتی فەرمانبەران )</div>
+  </div>
 </div>
 <section id="login" class="login"><h2>چوونەژوورەوە</h2><p class="muted">بە هەژماری ڕێگەپێدراو بچۆ ژوورەوە.</p>
 <form id="loginForm" onsubmit="if(!window.__loginHandlerReady){event.preventDefault();document.getElementById('loginMsg').textContent='فەرمانی چوونەژوورەوە چالاک نەبوو؛ پەڕەکە بە تەواوی بارنەبوو. تکایە پەڕەکە نوێ بکەرەوە.';return false}"><div class="field"><label>ئیمەیڵ</label><input id="email" type="email" required autocomplete="username"></div><div class="field"><label>وشەی نهێنی</label><input id="password" type="password" required autocomplete="current-password"></div><button class="btn">چوونەژوورەوە</button></form><button type="button" class="btn gray" id="forgotPassword" style="margin-top:10px">وشەی نهێنیم لەبیرچووە</button><p id="loginMsg" class="muted"></p></section><section id="recovery" class="login hidden"><h2>دانانی وشەی نهێنی نوێ</h2><form id="recoveryForm"><div class="field"><label>وشەی نهێنی نوێ</label><input id="newPassword" type="password" minlength="8" required autocomplete="new-password"></div><div class="field"><label>دووبارەکردنەوەی وشەی نهێنی</label><input id="confirmPassword" type="password" minlength="8" required autocomplete="new-password"></div><button class="btn">پاشەکەوتکردنی وشەی نهێنی</button></form><p id="recoveryMsg" class="muted"></p></section>
