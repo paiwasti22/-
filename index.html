@@ -1248,11 +1248,24 @@ window.runGlobalDelete = async function(ev){
   if(button){button.disabled=false;button.textContent='سڕینەوەی گشتی';}
  }
 };
-(function(){
- var button=document.getElementById('globalDeleteBtn');
- if(!button){console.error('Global delete button was not found in the page.');return;}
- button.addEventListener('click',window.runGlobalDelete);
-})();
+// Capture clicks at document level so the handler still works if the summary
+// panel is re-rendered after login or navigation.
+document.addEventListener('click',function(ev){
+ var target=ev.target;
+ var button=target&&target.closest?target.closest('#globalDeleteBtn'):null;
+ if(!button)return;
+ ev.preventDefault();
+ ev.stopPropagation();
+ if(typeof window.runGlobalDelete!=='function'){
+  var status=document.getElementById('globalDeleteStatus');
+  var message='فەرمانی سڕینەوە بارنەبووە؛ تکایە پەڕەکە نوێ بکەرەوە.';
+  if(status){status.textContent=message;status.style.display='block';status.style.color='#9b2525';}
+  else window.alert(message);
+  console.error('Global delete function is not available on click.');
+  return;
+ }
+ window.runGlobalDelete(ev);
+},true);
 </script>
 
 </body></html>
