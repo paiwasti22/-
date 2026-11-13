@@ -71,6 +71,26 @@ tbody tr:nth-child(even){background:#eaf1f8!important}
 tbody tr:nth-child(odd){background:#fff!important}
 tbody tr:hover{background:#d9e9f3!important}
 .msg{background:#fff0cc!important;color:#67440c!important;border:1px solid #d8b96e!important}
+
+/* Harmonized section surfaces and nested form groups */
+.page.active{background:rgba(215,226,239,.58);border:1px solid #b9c9da;border-radius:18px;padding:14px;box-shadow:inset 0 1px 0 rgba(255,255,255,.8)}
+.page.active>.panel{background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%)!important;border:1px solid #b8c9da!important;border-radius:15px!important;box-shadow:0 5px 16px rgba(26,55,87,.09)!important}
+.page.active>.panel>.panel,
+.page.active>.panel>form>.panel,
+.page.active>.panel>form>.panel[style]{background:linear-gradient(145deg,#e5eef7 0%,#edf4f9 100%)!important;border:1px solid #afc2d5!important;border-left:4px solid #347b91!important;border-radius:12px!important;padding:15px!important;margin:12px 0!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 2px 7px rgba(29,59,91,.06)!important}
+.page.active>.panel>.panel h2,
+.page.active>.panel>form>.panel h2{color:#174b68!important;border-bottom:1px solid #c3d3e2;padding-bottom:9px}
+.page.active .panel h3{color:#24516f!important}
+.page.active .field{min-width:0}
+.page.active .field input,
+.page.active .field select,
+.page.active .field textarea{background:#fff!important;border-color:#91a8bf!important}
+.page.active .field input[readonly]{background:#e6edf5!important;color:#30465e!important;border-style:solid!important}
+.page.active .tablewrap{background:#fff;border:1px solid #c5d3e1;border-radius:10px;padding:4px;box-shadow:inset 0 1px 3px rgba(24,52,82,.04)}
+.page.active .search-form{background:#e8f0f7;border:1px solid #c1d0df;border-radius:10px;padding:10px}
+.page.active .actions{flex-wrap:wrap}
+.page.active .msg{border-radius:10px}
+@media(max-width:540px){.page.active{padding:7px;border-radius:12px}.page.active>.panel{padding:12px!important}.page.active>.panel>.panel,.page.active>.panel>form>.panel{padding:11px!important}}
 </style></head>
 <body>
 <div class="wrap">
