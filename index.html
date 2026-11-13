@@ -776,6 +776,40 @@ body:has(#recovery:not(.hidden)) .institution-logo{
   box-shadow:0 8px 22px rgba(23,49,64,.2)!important;
 }
 
+
+/* Login form: email and password side by side, actions beneath */
+body:has(#login:not(.hidden)) #login #loginForm{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  column-gap:16px;
+  row-gap:4px;
+  align-items:end;
+}
+body:has(#login:not(.hidden)) #login #loginForm .field{
+  min-width:0;
+  margin:10px 0 12px;
+}
+body:has(#login:not(.hidden)) #login #loginForm>button[type="submit"],
+body:has(#login:not(.hidden)) #login #loginForm>button:not([type]){
+  grid-column:1 / -1;
+  width:100%;
+  margin-top:4px;
+}
+body:has(#login:not(.hidden)) #login #forgotPassword{
+  display:block;
+  width:100%;
+  margin-top:10px!important;
+}
+@media(max-width:600px){
+  body:has(#login:not(.hidden)) #login #loginForm{
+    grid-template-columns:minmax(0,1fr);
+    row-gap:0;
+  }
+  body:has(#login:not(.hidden)) #login #loginForm .field{
+    margin:9px 0;
+  }
+}
+
 </style></head>
 <body>
 <div class="wrap">
