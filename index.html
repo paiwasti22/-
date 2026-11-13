@@ -1176,7 +1176,8 @@ $('backup').onclick=()=>{let a=document.createElement('a'),u=URL.createObjectURL
 
 
 
-db.auth.getSession().then(r=>{if(r.data.session)enter(r.data.session)});\n</script>
+db.auth.getSession().then(r=>{if(r.data.session)enter(r.data.session)});
+</script>
 <script>
 window.runGlobalDelete = async function(ev){
  if(ev){ev.preventDefault();ev.stopPropagation();}
