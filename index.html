@@ -1170,28 +1170,35 @@ function clearPermForm(){
 window.clearPermForm=clearPermForm;
 $('backup').onclick=()=>{let a=document.createElement('a'),u=URL.createObjectURL(new Blob([JSON.stringify({employees:E,leave_records:L,daily_permissions:P,long_term_leaves:T},null,2)],{type:'application/json'}));a.href=u;a.download='leave-permission-backup.json';a.click();URL.revokeObjectURL(u)};
 
-$('globalDeleteBtn').onclick=async()=>{
- const first=window.confirm('ئاگاداری گرنگ! هەموو داتای فەرمانبەران و تۆمارەکانی مۆڵەت و سەماح و مۆڵەتی درێژخایەن دەسڕدرێتەوە. ئەم کردارە ناگەڕێتەوە. پێش بەردەوامبوون پاشەکەوتی JSON دادەبەزێت. دڵنیایت؟');
+
+document.addEventListener('click',async function(ev){
+ const btn=ev.target.closest('#globalDeleteBtn');
+ if(!btn)return;
+ ev.preventDefault();
+ if(btn.dataset.running==='1')return;
+ const first=window.confirm('ئاگاداری گرنگ! هەموو داتای فەرمانبەران و مۆڵەت و سەماحی ڕۆژانە و مۆڵەتی درێژخایەن دەسڕدرێتەوە. پێش سڕینەوە پاشەکەوتی JSON دادەبەزێت. دڵنیایت؟');
  if(!first)return;
- const phrase=window.prompt('بۆ پشتڕاستکردنەوە، ئەم دەقە بە تەواوی بنووسە: سڕینەوەی گشتی');
- if(phrase!=='سڕینەوەی گشتی')return say('سڕینەوە هەڵوەشێنرایەوە؛ دەقی پشتڕاستکردنەوە دروست نەبوو.');
- const btn=$('globalDeleteBtn');btn.disabled=true;btn.textContent='تکایە چاوەڕێ بکە...';
+ const second=window.confirm('ئەم کردارە ناگەڕێتەوە. دڵنیایت کە دەتەوێت هەموو زانیارییە تۆمارکراوەکان بسڕیتەوە؟');
+ if(!second)return;
+ btn.dataset.running='1';btn.disabled=true;btn.textContent='تکایە چاوەڕێ بکە...';
+ say('ئامادەکاری بۆ پاشەکەوتکردن و سڕینەوە...');
  try{
   const employeeBackup=await db.from('employees').select('*');
   if(employeeBackup.error)throw employeeBackup.error;
   const backup={created_at:new Date().toISOString(),employees:employeeBackup.data||[],leave_employees:EL,permission_employees:EP,long_leave_employees:ET,leave_records:L,daily_permissions:P,long_term_leaves:T};
   const url=URL.createObjectURL(new Blob([JSON.stringify(backup,null,2)],{type:'application/json'}));
-  const a=document.createElement('a');a.href=url;a.download='mollat-system-before-global-delete-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);
+  const a=document.createElement('a');a.href=url;a.download='mollat-system-backup-before-delete-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),3000);
   const result=await db.rpc('clear_business_data');
   if(result.error)throw result.error;
   await load();
-  ['homeMainCode'].forEach(id=>{if($(id))$(id).value=''});
+  if($('homeMainCode'))$('homeMainCode').value='';
   if($('homeEmpResult')){$('homeEmpResult').textContent='';$('homeEmpResult').classList.add('hidden')}
   const counts=result.data||{};
-  say('سڕینەوەی گشتی بە سەرکەوتوویی تەواو بوو. پاشەکەوتی JSONیش دابەزی. ژمارەی تۆمارە سڕاوەکان: '+Object.values(counts).reduce((a,b)=>a+Number(b||0),0));
- }catch(e){say('سڕینەوە تەواو نەبوو: '+(e?.message||String(e))+'. پاشەکەوتی JSON ئەگەر دابەزیبێت، پارێزراوە.')}
- finally{btn.disabled=false;btn.textContent='سڕینەوەی گشتی'}
-};
+  say('سڕینەوەی گشتی بە سەرکەوتوویی تەواو بوو. پاشەکەوتی JSON دابەزی. ژمارەی تۆمارە سڕاوەکان: '+Object.values(counts).reduce((a,b)=>a+Number(b||0),0));
+ }catch(e){console.error('Global delete failed:',e);say('سڕینەوە ئەنجام نەدرا: '+(e?.message||String(e))+'. هیچ داتایەک نابێت بەبێ سەرکەوتنی فەرمانەکە بسڕدرێتەوە.')}
+ finally{btn.dataset.running='0';btn.disabled=false;btn.textContent='سڕینەوەی گشتی'}
+});
+
 
 db.auth.getSession().then(r=>{if(r.data.session)enter(r.data.session)});
 </script></body></html>
