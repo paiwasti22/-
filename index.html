@@ -214,46 +214,27 @@ function clearLeaveForm(){
 }
 window.clearLeaveForm=clearLeaveForm;
 function clearPermForm(){
- clear(['permId','permMainCode','permEmployeeName','permJobTitle','permGender','permEmploymentType','permDepartment','permSeq','permDate','timeFrom','timeTo','permType','permNotes']);
- window._permEditAction=false;
- updateSequenceFields();
- $('permMainCode').value='';
- $('permMainCode').focus();
-}
-window.clearPermForm=clearPermForm;
-$('clearLeave').onclick=window.clearLeaveForm;
-$('clearLeave').setAttribute('onclick','return window.clearLeaveForm()');
-function clearDailyPermissionFormDirect(ev){
- if(ev){ev.preventDefault();ev.stopPropagation();}
  const form=document.getElementById('permForm');
  if(!form)return false;
- // Clear the actual form controls directly; do not depend on shared clear() helpers.
- HTMLFormElement.prototype.reset.call(form);
- const controls=form.querySelectorAll('input,select,textarea');
- for(let i=0;i<controls.length;i++){
-  const field=controls[i];
-  if(field.type==='button'||field.type==='submit')continue;
-  if(field.type==='checkbox'||field.type==='radio')field.checked=false;
-  else if(field.tagName==='SELECT')field.selectedIndex=0;
-  else field.value='';
-  field.removeAttribute('aria-invalid');
-  field.classList.remove('invalid');
- }
+ form.reset();
+ form.querySelectorAll('input,select,textarea').forEach(el=>{
+  if(el.type==='button'||el.type==='submit')return;
+  if(el.tagName==='SELECT')el.selectedIndex=0;
+  else if(el.type==='checkbox'||el.type==='radio')el.checked=false;
+  else el.value='';
+  el.dispatchEvent(new Event('input',{bubbles:true}));
+  el.dispatchEvent(new Event('change',{bubbles:true}));
+ });
  window._permEditAction=false;
- const hiddenId=document.getElementById('permId');if(hiddenId)hiddenId.value='';
- const sequence=document.getElementById('permSeq');
- if(sequence){try{sequence.value=nextSequence(P)}catch(e){sequence.value='١'}}
- const mainCode=document.getElementById('permMainCode');
- if(mainCode){mainCode.value='';mainCode.focus()}
+ try{updateSequenceFields()}catch(e){}
+ try{document.getElementById('permSeq').value=nextSequence(P)}catch(e){}
+ const code=document.getElementById('permMainCode');
+ if(code)code.focus();
  return false;
 }
-window.clearDailyPermissionFormDirect=clearDailyPermissionFormDirect;
-const clearPermButton=document.getElementById('clearPerm');
-if(clearPermButton){
- clearPermButton.type='button';
- clearPermButton.onclick=clearDailyPermissionFormDirect;
- clearPermButton.setAttribute('onclick','return window.clearDailyPermissionFormDirect(event)');
-}
+window.clearPermForm=clearPermForm;
+$('clearPerm').onclick=window.clearPermForm;
+$('clearPerm').setAttribute('onclick','return window.clearPermForm()');
 $('backup').onclick=()=>{let a=document.createElement('a'),u=URL.createObjectURL(new Blob([JSON.stringify({employees:E,leave_records:L,daily_permissions:P,long_term_leaves:T},null,2)],{type:'application/json'}));a.href=u;a.download='leave-permission-backup.json';a.click();URL.revokeObjectURL(u)};
 db.auth.getSession().then(r=>{if(r.data.session)enter(r.data.session)});
 </script></body></html>
