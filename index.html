@@ -223,34 +223,37 @@ function clearPermForm(){
 window.clearPermForm=clearPermForm;
 $('clearLeave').onclick=window.clearLeaveForm;
 $('clearLeave').setAttribute('onclick','return window.clearLeaveForm()');
-$('clearPerm').onclick=null;
-$('clearPerm').removeAttribute('onclick');
-document.addEventListener('click',function(ev){
- const target=ev.target;
- const button=target&&target.closest?target.closest('#clearPerm'):null;
- if(!button)return;
- ev.preventDefault();
- ev.stopPropagation();
- if(ev.stopImmediatePropagation)ev.stopImmediatePropagation();
+function clearDailyPermissionFormDirect(ev){
+ if(ev){ev.preventDefault();ev.stopPropagation();}
  const form=document.getElementById('permForm');
- if(!form)return;
- // Reset all fields inside the daily-permission form, independent of helper functions.
+ if(!form)return false;
+ // Clear the actual form controls directly; do not depend on shared clear() helpers.
  HTMLFormElement.prototype.reset.call(form);
- form.querySelectorAll('input:not([type="button"]):not([type="submit"]),select,textarea').forEach(function(field){
+ const controls=form.querySelectorAll('input,select,textarea');
+ for(let i=0;i<controls.length;i++){
+  const field=controls[i];
+  if(field.type==='button'||field.type==='submit')continue;
   if(field.type==='checkbox'||field.type==='radio')field.checked=false;
   else if(field.tagName==='SELECT')field.selectedIndex=0;
   else field.value='';
-  field.dispatchEvent(new Event('input',{bubbles:true}));
-  field.dispatchEvent(new Event('change',{bubbles:true}));
- });
+  field.removeAttribute('aria-invalid');
+  field.classList.remove('invalid');
+ }
  window._permEditAction=false;
- const seq=document.getElementById('permSeq');
- if(seq){try{seq.value=nextSequence(P)}catch(e){seq.value='١'}}
- const code=document.getElementById('permMainCode');
- if(code){code.value='';code.focus()}
- const id=document.getElementById('permId');
- if(id)id.value='';
-},true);
+ const hiddenId=document.getElementById('permId');if(hiddenId)hiddenId.value='';
+ const sequence=document.getElementById('permSeq');
+ if(sequence){try{sequence.value=nextSequence(P)}catch(e){sequence.value='١'}}
+ const mainCode=document.getElementById('permMainCode');
+ if(mainCode){mainCode.value='';mainCode.focus()}
+ return false;
+}
+window.clearDailyPermissionFormDirect=clearDailyPermissionFormDirect;
+const clearPermButton=document.getElementById('clearPerm');
+if(clearPermButton){
+ clearPermButton.type='button';
+ clearPermButton.onclick=clearDailyPermissionFormDirect;
+ clearPermButton.setAttribute('onclick','return window.clearDailyPermissionFormDirect(event)');
+}
 $('backup').onclick=()=>{let a=document.createElement('a'),u=URL.createObjectURL(new Blob([JSON.stringify({employees:E,leave_records:L,daily_permissions:P,long_term_leaves:T},null,2)],{type:'application/json'}));a.href=u;a.download='leave-permission-backup.json';a.click();URL.revokeObjectURL(u)};
 db.auth.getSession().then(r=>{if(r.data.session)enter(r.data.session)});
 </script></body></html>
