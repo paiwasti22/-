@@ -99,9 +99,10 @@ tbody tr:hover{background:#d9e9f3!important}
 .institution-heading{
   display:none;
   position:relative;
-  width:min( min(780px, calc(100% - 48px)), 100%);
-  margin:20px 24px 0 auto;
-  padding:18px 24px 18px 178px;
+  width:calc(100% - 48px);
+  min-height:190px;
+  margin:20px 24px 0;
+  padding:18px 205px 18px 205px;
   text-align:right;
   direction:rtl;
   color:#173653;
@@ -119,12 +120,12 @@ tbody tr:hover{background:#d9e9f3!important}
 .institution-lines{width:100%;text-align:right}
 .institution-logo{
   position:absolute;
-  left:20px;
+  left:18px;
   top:50%;
   transform:translateY(-50%);
-  width:clamp(112px,11vw,150px);
+  width:clamp(150px,14vw,190px);
   height:auto;
-  max-height:160px;
+  max-height:180px;
   object-fit:contain;
   display:block;
 }
@@ -139,7 +140,7 @@ tbody tr:hover{background:#d9e9f3!important}
 body:has(#login:not(.hidden)) .institution-heading,
 body:has(#recovery:not(.hidden)) .institution-heading{display:block}
 @media(max-width:600px){
-  .institution-heading{width:calc(100% - 24px);margin:12px 12px 0 auto;padding:12px 12px 12px 88px;font-size:13px;line-height:1.85;border-radius:11px;min-height:148px}
+  .institution-heading{width:calc(100% - 24px);margin:12px 12px 0;padding:12px 12px 12px 88px;font-size:13px;line-height:1.8;border-radius:11px;min-height:160px}
   .institution-lines{text-align:right}
   .institution-logo{left:8px;top:12px;transform:none;width:74px;max-height:94px}
   .institution-system-title{margin-top:6px;padding-top:6px}
