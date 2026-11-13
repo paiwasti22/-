@@ -178,6 +178,121 @@ body:has(#recovery:not(.hidden)){
   border:1.7px solid #829bb7!important;
 }
 #options .panel{background:linear-gradient(145deg,#f7fbff,#e5eef7)!important;border:1px solid #aebfd2!important}#options .field input{background:#fff!important;border:1.7px solid #829bb7!important}
+
+/* Login page layout refined to match the supplied institutional reference */
+body:has(#login:not(.hidden)) .wrap,
+body:has(#recovery:not(.hidden)) .wrap{
+  width:100%;
+  max-width:none;
+  margin:0;
+  padding:0;
+  position:relative;
+}
+body:has(#login:not(.hidden)),
+body:has(#recovery:not(.hidden)){
+  min-height:100vh;
+  overflow-x:hidden;
+  background:linear-gradient(135deg,#f4f7fb 0%,#e4edf7 100%)!important;
+}
+body:has(#login:not(.hidden)) .institution-heading,
+body:has(#recovery:not(.hidden)) .institution-heading{
+  width:100%;
+  min-height:505px;
+  margin:0;
+  padding:22px 30px;
+  border-radius:0 0 18px 18px;
+  border:1px solid #b8c9da;
+  border-top:3px solid #8ba7c2;
+  border-right:0;
+  box-shadow:0 4px 18px rgba(28,57,87,.08);
+  display:grid;
+  grid-template-columns:minmax(240px,1fr) minmax(420px,1fr);
+  column-gap:24px;
+  align-items:start;
+  direction:ltr;
+  box-sizing:border-box;
+}
+body:has(#login:not(.hidden)) .institution-logo,
+body:has(#recovery:not(.hidden)) .institution-logo{
+  grid-column:1;
+  grid-row:1;
+  justify-self:start;
+  align-self:start;
+  width:clamp(170px,14vw,230px);
+  max-height:240px;
+  margin:0 0 0 18px;
+}
+body:has(#login:not(.hidden)) .institution-lines,
+body:has(#recovery:not(.hidden)) .institution-lines{
+  grid-column:2;
+  grid-row:1;
+  width:100%;
+  direction:rtl;
+  text-align:center;
+  justify-self:end;
+  margin:0;
+  font-size:clamp(16px,1.5vw,23px);
+  line-height:2.05;
+  color:#123e60;
+}
+body:has(#login:not(.hidden)) .institution-system-title,
+body:has(#recovery:not(.hidden)) .institution-system-title{
+  margin:12px -30px 0;
+  padding:12px 20px;
+  width:calc(100% + 60px);
+  border-top:1px solid #bfd0df;
+  background:rgba(225,235,246,.62);
+  color:#0b496e;
+  font-size:1.12em;
+  text-align:center;
+}
+body:has(#login:not(.hidden)) #login.login,
+body:has(#recovery:not(.hidden)) #recovery.login{
+  position:relative;
+  z-index:2;
+  width:min(700px,calc(100% - 32px));
+  min-height:383px;
+  margin:-303px auto 8px;
+  padding:28px 30px;
+  border-radius:0;
+  background:#fff!important;
+  border:0!important;
+  box-shadow:0 8px 24px rgba(27,53,80,.08)!important;
+}
+@media(max-width:700px){
+  body:has(#login:not(.hidden)) .institution-heading,
+  body:has(#recovery:not(.hidden)) .institution-heading{
+    min-height:390px;
+    padding:14px 12px;
+    grid-template-columns:92px minmax(0,1fr);
+    column-gap:10px;
+  }
+  body:has(#login:not(.hidden)) .institution-logo,
+  body:has(#recovery:not(.hidden)) .institution-logo{
+    width:88px;
+    max-height:110px;
+    margin:4px 0 0;
+  }
+  body:has(#login:not(.hidden)) .institution-lines,
+  body:has(#recovery:not(.hidden)) .institution-lines{
+    font-size:13px;
+    line-height:1.9;
+  }
+  body:has(#login:not(.hidden)) .institution-system-title,
+  body:has(#recovery:not(.hidden)) .institution-system-title{
+    margin:8px -12px 0;
+    width:calc(100% + 24px);
+    padding:9px 8px;
+  }
+  body:has(#login:not(.hidden)) #login.login,
+  body:has(#recovery:not(.hidden)) #recovery.login{
+    width:calc(100% - 28px);
+    min-height:300px;
+    margin:-150px auto 14px;
+    padding:20px 16px;
+  }
+}
+
 </style></head>
 <body>
 <div class="wrap">
