@@ -1176,9 +1176,6 @@ $('backup').onclick=()=>{let a=document.createElement('a'),u=URL.createObjectURL
 
 
 
-db.auth.getSession().then(r=>{if(r.data.session)enter(r.data.session)});
-</script>
-<script>
 window.runGlobalDelete = async function(ev){
  if(ev){ev.preventDefault();ev.stopPropagation();}
  var button=document.getElementById('globalDeleteBtn');
@@ -1266,6 +1263,7 @@ document.addEventListener('click',function(ev){
  }
  window.runGlobalDelete(ev);
 },true);
+db.auth.getSession().then(r=>{if(r.data.session)enter(r.data.session)});
 </script>
 
 </body></html>
