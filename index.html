@@ -91,6 +91,25 @@ tbody tr:hover{background:#d9e9f3!important}
 .page.active .actions{flex-wrap:wrap}
 .page.active .msg{border-radius:10px}
 @media(max-width:540px){.page.active{padding:7px;border-radius:12px}.page.active>.panel{padding:12px!important}.page.active>.panel>.panel,.page.active>.panel>form>.panel{padding:11px!important}}
+
+/* Login and password-recovery page: deeper, balanced blue background */
+body:has(#login:not(.hidden)),
+body:has(#recovery:not(.hidden)){
+  min-height:100vh;
+  background:
+    radial-gradient(ellipse at 18% 12%,rgba(73,126,170,.32) 0%,transparent 42%),
+    linear-gradient(135deg,#9aacc2 0%,#8299b3 48%,#718ba8 100%)!important;
+}
+#login.login,#recovery.login{
+  background:linear-gradient(155deg,#f8fbff 0%,#e5edf7 100%)!important;
+  border:1px solid #9aafc7!important;
+  box-shadow:0 16px 38px rgba(15,35,61,.24),inset 0 1px 0 rgba(255,255,255,.95)!important;
+}
+#login.login h2,#recovery.login h2{color:#173b60!important}
+#login.login .field input,#recovery.login .field input{
+  background:#fff!important;
+  border:1.7px solid #829bb7!important;
+}
 </style></head>
 <body>
 <div class="wrap">
