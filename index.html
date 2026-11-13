@@ -694,6 +694,88 @@ body:has(#recovery:not(.hidden)) #recoveryMsg{
   }
 }
 
+
+/* Balanced mid-tone login palette: neither too pale nor too dark. */
+body:has(#login:not(.hidden)),
+body:has(#recovery:not(.hidden)){
+  background:
+    radial-gradient(ellipse at 14% 10%,rgba(66,133,143,.20),transparent 40%),
+    radial-gradient(ellipse at 88% 78%,rgba(184,148,83,.10),transparent 36%),
+    linear-gradient(135deg,#aebfca 0%,#9eafb9 52%,#b7c4ca 100%)!important;
+}
+body:has(#login:not(.hidden)) .institution-heading,
+body:has(#recovery:not(.hidden)) .institution-heading{
+  background:linear-gradient(115deg,#d2dfe2 0%,#bdcfd2 100%)!important;
+  border-color:#91a9ae!important;
+  border-top-color:#ae9258!important;
+  box-shadow:0 12px 28px rgba(31,62,78,.17)!important;
+}
+body:has(#login:not(.hidden)) .institution-lines,
+body:has(#recovery:not(.hidden)) .institution-lines{
+  color:#294858!important;
+}
+body:has(#login:not(.hidden)) .institution-system-title,
+body:has(#recovery:not(.hidden)) .institution-system-title{
+  color:#315766!important;
+  background:rgba(239,245,245,.46)!important;
+  border-top-color:#a9bec1!important;
+}
+body:has(#login:not(.hidden)) #login.login,
+body:has(#recovery:not(.hidden)) #recovery.login{
+  color:#eaf0f1!important;
+  background:linear-gradient(150deg,#536d7b 0%,#405967 100%)!important;
+  border-color:#718b94!important;
+  box-shadow:0 18px 42px rgba(29,58,73,.24),inset 0 1px 0 rgba(255,255,255,.12)!important;
+}
+body:has(#login:not(.hidden)) #login.login h2,
+body:has(#recovery:not(.hidden)) #recovery.login h2{
+  color:#f5f7f6!important;
+  border-bottom-color:rgba(226,237,237,.24)!important;
+}
+body:has(#login:not(.hidden)) #login.login p.muted,
+body:has(#recovery:not(.hidden)) #recovery.login p.muted{
+  color:#d3dfe1!important;
+}
+body:has(#login:not(.hidden)) #login.login .field label,
+body:has(#recovery:not(.hidden)) #recovery.login .field label{
+  color:#edf2f1!important;
+}
+body:has(#login:not(.hidden)) #login.login .field input,
+body:has(#recovery:not(.hidden)) #recovery.login .field input{
+  color:#263f4b!important;
+  background:#dce6e7!important;
+  border-color:#9eb3b8!important;
+}
+body:has(#login:not(.hidden)) #login.login .field input:focus,
+body:has(#recovery:not(.hidden)) #recovery.login .field input:focus{
+  background:#f5f8f7!important;
+  border-color:#65a59f!important;
+  box-shadow:0 0 0 3px rgba(101,165,159,.2)!important;
+}
+body:has(#login:not(.hidden)) #login.login form .btn,
+body:has(#recovery:not(.hidden)) #recovery.login form .btn{
+  color:#fff!important;
+  background:linear-gradient(105deg,#347f80 0%,#438f87 100%)!important;
+  border-color:#6ba49c!important;
+  box-shadow:0 5px 13px rgba(36,89,88,.24)!important;
+}
+body:has(#login:not(.hidden)) #forgotPassword{
+  color:#e8efef!important;
+  background:rgba(255,255,255,.08)!important;
+  border-color:rgba(214,229,229,.38)!important;
+}
+body:has(#login:not(.hidden)) #loginMsg,
+body:has(#recovery:not(.hidden)) #recoveryMsg{
+  color:#f0dcae!important;
+}
+/* Keep the government logo prominent and clearly framed. */
+body:has(#login:not(.hidden)) .institution-logo,
+body:has(#recovery:not(.hidden)) .institution-logo{
+  background:rgba(250,252,251,.94)!important;
+  border:1px solid rgba(255,255,255,.98)!important;
+  box-shadow:0 8px 22px rgba(23,49,64,.2)!important;
+}
+
 </style></head>
 <body>
 <div class="wrap">
