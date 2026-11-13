@@ -911,6 +911,12 @@ body:has(#login:not(.hidden)) #login #loginForm .field input{
   }
 }
 
+
+/* Global data reset control */
+.global-delete-panel{border:1px solid #e4b5b5!important;background:linear-gradient(135deg,#fffafa,#fff3f1)!important}
+.global-delete-btn{background:#a83232!important;color:#fff!important;border-radius:10px!important;padding:11px 22px!important}
+.global-delete-btn:hover{background:#842626!important}
+
 </style></head>
 <body>
 <div class="wrap">
@@ -931,7 +937,7 @@ body:has(#login:not(.hidden)) #login #loginForm .field input{
 <header class="top"><div class="app-title-area"><h1>سیستەمی بەڕێوەبردنی مۆڵەت و سەماح</h1><span class="muted">داتابەیسی هاوبەشی فەرمانبەران</span></div><img class="app-institution-logo" src="https://gov.krd/media/2893/krg_logo_2480x2056.png" alt="لۆگۆی حکومەتی هەرێمی کوردستان"><div class="app-account-area"><span id="who" class="muted"></span> <button id="changeAccountEmail" type="button" class="btn gray">گۆڕینی ئیمەیڵی هەژمار</button> <button id="logout" class="btn gray">چوونەدەرەوە</button></div></header>
 <div class="layout"><nav class="nav"><button class="active" data-page="home">پوختەی گشتی</button><button data-page="printLeave">پرنتکردنی مۆڵەت</button><button data-page="printPermissions">پرنتکردنی سەماحی ڕۆژانە</button><button data-page="employees">فەرمانبەران</button><button data-page="options">بەڕێوەبردنی هەڵبژاردەکان</button><button data-page="leaves">مۆڵەت</button><button data-page="permissions">سەماحی ڕۆژانە</button><button data-page="longLeaves">مۆڵەتی درێژخایەن</button></nav>
 <main>
-<section id="home" class="page active"><div class="summary-groups"><div class="summary-group"><h3>بەشی مۆڵەت</h3><div class="summary-metrics"><div class="stat">ژمارەی فەرمانبەرانی مۆڵەت<strong id="nLeaveEmp">0</strong></div><div class="stat">ژمارەی مۆڵەتەکان<strong id="nLeave">0</strong></div></div></div><div class="summary-group"><h3>بەشی سەماحی ڕۆژانە</h3><div class="summary-metrics"><div class="stat">ژمارەی فەرمانبەرانی سەماح<strong id="nPermEmp">0</strong></div><div class="stat">ژمارەی سەماحەکان<strong id="nPerm">0</strong></div></div></div><div class="summary-group"><h3>بەشی مۆڵەتی درێژخایەن</h3><div class="summary-metrics"><div class="stat">ژمارەی فەرمانبەرانی مۆڵەتی درێژخایەن<strong id="nLongEmp">0</strong></div><div class="stat">ژمارەی مۆڵەتە درێژخایەنەکان<strong id="nLong">0</strong></div></div></div></div><div class="panel"><h2>ئاگادارکردنەوەی مۆڵەتی درێژخایەن</h2><div id="longLeaveAlerts" aria-live="polite" class="muted">هیچ ئاگادارکردنەوەیەک نییە.</div></div><div class="panel"><h2>گەڕان بە کۆدی سەرەکی فەرمانبەر</h2><form id="homeEmpSearch"><div class="field"><label for="homeMainCode">کۆدی سەرەکی</label><input id="homeMainCode" autocomplete="off" placeholder="کۆدی سەرەکی بنووسە" required></div><div class="actions"><button class="btn" type="submit">گەڕان</button><button class="btn gray" type="button" id="clearHomeSearch">پاککردنەوە</button></div></form><div id="homeEmpResult" class="msg hidden" aria-live="polite"></div></div><div class="panel"><h2>بەخێربێیت</h2><p class="muted">تۆمارەکان لە Supabase پاشەکەوت دەکرێن و لەسەر ئامێرەکانی تر بە هەمان هەژمار دەردەکەون.</p><button id="backup" class="btn">داگرتنی پاشەکەوتی JSON</button></div></section>
+<section id="home" class="page active"><div class="summary-groups"><div class="summary-group"><h3>بەشی مۆڵەت</h3><div class="summary-metrics"><div class="stat">ژمارەی فەرمانبەرانی مۆڵەت<strong id="nLeaveEmp">0</strong></div><div class="stat">ژمارەی مۆڵەتەکان<strong id="nLeave">0</strong></div></div></div><div class="summary-group"><h3>بەشی سەماحی ڕۆژانە</h3><div class="summary-metrics"><div class="stat">ژمارەی فەرمانبەرانی سەماح<strong id="nPermEmp">0</strong></div><div class="stat">ژمارەی سەماحەکان<strong id="nPerm">0</strong></div></div></div><div class="summary-group"><h3>بەشی مۆڵەتی درێژخایەن</h3><div class="summary-metrics"><div class="stat">ژمارەی فەرمانبەرانی مۆڵەتی درێژخایەن<strong id="nLongEmp">0</strong></div><div class="stat">ژمارەی مۆڵەتە درێژخایەنەکان<strong id="nLong">0</strong></div></div></div></div><div class="panel global-delete-panel"><h2>سڕینەوەی گشتی</h2><p class="muted">ئەم کردارە هەموو زانیارییە تۆمارکراوەکانی فەرمانبەران، مۆڵەت، سەماحی ڕۆژانە و مۆڵەتی درێژخایەن دەسڕێتەوە. هەڵبژاردەکان، هەژماری چوونەژوورەوە و تۆماری چاودێری دەمێننەوە.</p><button id="globalDeleteBtn" type="button" class="btn global-delete-btn">سڕینەوەی گشتی</button></div><div class="panel"><h2>ئاگادارکردنەوەی مۆڵەتی درێژخایەن</h2><div id="longLeaveAlerts" aria-live="polite" class="muted">هیچ ئاگادارکردنەوەیەک نییە.</div></div><div class="panel"><h2>گەڕان بە کۆدی سەرەکی فەرمانبەر</h2><form id="homeEmpSearch"><div class="field"><label for="homeMainCode">کۆدی سەرەکی</label><input id="homeMainCode" autocomplete="off" placeholder="کۆدی سەرەکی بنووسە" required></div><div class="actions"><button class="btn" type="submit">گەڕان</button><button class="btn gray" type="button" id="clearHomeSearch">پاککردنەوە</button></div></form><div id="homeEmpResult" class="msg hidden" aria-live="polite"></div></div><div class="panel"><h2>بەخێربێیت</h2><p class="muted">تۆمارەکان لە Supabase پاشەکەوت دەکرێن و لەسەر ئامێرەکانی تر بە هەمان هەژمار دەردەکەون.</p><button id="backup" class="btn">داگرتنی پاشەکەوتی JSON</button></div></section>
 <section id="printLeave" class="page"><div class="panel"><h2>پرنتی مۆڵەت بەپێی کۆدی سەرەکی</h2><p class="muted">کۆدی سەرەکی فەرمانبەر بنووسە؛ هەموو تۆمارەکانی مۆڵەتی ئەو کۆدە لە یەک فۆرم چاپ دەکرێن.</p><form id="printLeaveCodeForm"><div class="field"><label for="printLeaveMainCode">کۆدی سەرەکی</label><input id="printLeaveMainCode" autocomplete="off" placeholder="کۆدی سەرەکی بنووسە" required></div><div class="actions"><button class="btn" type="submit">گەڕان</button><button class="btn gray" type="button" id="clearPrintLeaveCode">پاککردنەوە</button></div></form><div id="printLeaveResult" class="msg hidden" aria-live="polite"></div></div></section>
 <section id="printPermissions" class="page"><div class="panel"><h2>پرنتکردنی سەماحی ڕۆژانە بەپێی کۆدی سەرەکی</h2><p class="muted">کۆدی سەرەکی فەرمانبەر بنووسە؛ هەموو تۆمارەکانی سەماحی ئەو فەرمانبەرە لە یەک فۆرم چاپ دەکرێن.</p><form id="printPermCodeForm"><div class="field"><label for="printPermMainCode">کۆدی سەرەکی</label><input id="printPermMainCode" autocomplete="off" placeholder="کۆدی سەرەکی بنووسە" required></div><div class="actions"><button class="btn" type="submit">گەڕان و پرنتکردن</button><button class="btn gray" type="button" id="clearPrintPermCode">پاککردنەوە</button></div></form><div id="printPermResult" class="msg hidden" aria-live="polite"></div></div></section><section id="employees" class="page">
 
@@ -1163,5 +1169,29 @@ function clearPermForm(){
 }
 window.clearPermForm=clearPermForm;
 $('backup').onclick=()=>{let a=document.createElement('a'),u=URL.createObjectURL(new Blob([JSON.stringify({employees:E,leave_records:L,daily_permissions:P,long_term_leaves:T},null,2)],{type:'application/json'}));a.href=u;a.download='leave-permission-backup.json';a.click();URL.revokeObjectURL(u)};
+
+$('globalDeleteBtn').onclick=async()=>{
+ const first=window.confirm('ئاگاداری گرنگ! هەموو داتای فەرمانبەران و تۆمارەکانی مۆڵەت و سەماح و مۆڵەتی درێژخایەن دەسڕدرێتەوە. ئەم کردارە ناگەڕێتەوە. پێش بەردەوامبوون پاشەکەوتی JSON دادەبەزێت. دڵنیایت؟');
+ if(!first)return;
+ const phrase=window.prompt('بۆ پشتڕاستکردنەوە، ئەم دەقە بە تەواوی بنووسە: سڕینەوەی گشتی');
+ if(phrase!=='سڕینەوەی گشتی')return say('سڕینەوە هەڵوەشێنرایەوە؛ دەقی پشتڕاستکردنەوە دروست نەبوو.');
+ const btn=$('globalDeleteBtn');btn.disabled=true;btn.textContent='تکایە چاوەڕێ بکە...';
+ try{
+  const employeeBackup=await db.from('employees').select('*');
+  if(employeeBackup.error)throw employeeBackup.error;
+  const backup={created_at:new Date().toISOString(),employees:employeeBackup.data||[],leave_employees:EL,permission_employees:EP,long_leave_employees:ET,leave_records:L,daily_permissions:P,long_term_leaves:T};
+  const url=URL.createObjectURL(new Blob([JSON.stringify(backup,null,2)],{type:'application/json'}));
+  const a=document.createElement('a');a.href=url;a.download='mollat-system-before-global-delete-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);
+  const result=await db.rpc('clear_business_data');
+  if(result.error)throw result.error;
+  await load();
+  ['homeMainCode'].forEach(id=>{if($(id))$(id).value=''});
+  if($('homeEmpResult')){$('homeEmpResult').textContent='';$('homeEmpResult').classList.add('hidden')}
+  const counts=result.data||{};
+  say('سڕینەوەی گشتی بە سەرکەوتوویی تەواو بوو. پاشەکەوتی JSONیش دابەزی. ژمارەی تۆمارە سڕاوەکان: '+Object.values(counts).reduce((a,b)=>a+Number(b||0),0));
+ }catch(e){say('سڕینەوە تەواو نەبوو: '+(e?.message||String(e))+'. پاشەکەوتی JSON ئەگەر دابەزیبێت، پارێزراوە.')}
+ finally{btn.disabled=false;btn.textContent='سڕینەوەی گشتی'}
+};
+
 db.auth.getSession().then(r=>{if(r.data.session)enter(r.data.session)});
 </script></body></html>
