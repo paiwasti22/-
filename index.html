@@ -451,6 +451,26 @@ body:has(#recovery:not(.hidden)) #recoveryMsg{margin:12px 0 0}
   #app .app-institution-logo{left:10px;width:58px;height:56px}
 }
 
+
+/* Strictly separate the login institutional frame from the signed-in app. */
+body:has(#app:not(.hidden)) #institutionHeader{
+  display:none!important;
+}
+body:has(#app:not(.hidden)) #app .app-institution-logo{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+body:has(#app:not(.hidden)) #app .top{
+  position:relative;
+  padding-left:112px;
+  min-height:88px;
+}
+@media(max-width:540px){
+  body:has(#app:not(.hidden)) #app .top{padding-left:76px;min-height:82px}
+  body:has(#app:not(.hidden)) #app .app-institution-logo{left:10px;width:58px;height:56px}
+}
+
 </style></head>
 <body>
 <div class="wrap">
