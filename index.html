@@ -193,23 +193,50 @@ function clearEntryFormNow(formId,codeId,seqId,mode){
  if(code){code.value='';code.focus();}
  return false;
 }
-window.clearLeaveForm=function(){
- const ids=['leaveId','leaveMainCode','leaveEmployeeName','leaveJobTitle','leaveGender','leaveEmploymentType','leaveDepartment','leaveDefaultLeaveType','leaveSeq','leaveDuration','leaveFrom','leaveTo','leaveDaily'];
- ids.forEach(id=>{const el=document.getElementById(id);if(!el)return;if(el.tagName==='SELECT')el.selectedIndex=0;else el.value='';});
+function clearLeaveForm(){
+ const form=document.getElementById('leaveForm');
+ if(!form)return false;
+ form.reset();
+ form.querySelectorAll('input,select,textarea').forEach(el=>{
+  if(el.type==='button'||el.type==='submit')return;
+  if(el.tagName==='SELECT')el.selectedIndex=0;
+  else if(el.type==='checkbox'||el.type==='radio')el.checked=false;
+  else el.value='';
+  el.dispatchEvent(new Event('input',{bubbles:true}));
+  el.dispatchEvent(new Event('change',{bubbles:true}));
+ });
  window._leaveEditAction=false;
- const seq=document.getElementById('leaveSeq');
- if(seq)seq.value=nextSequence(L);
+ try{updateSequenceFields()}catch(e){}
+ try{document.getElementById('leaveSeq').value=nextSequence(L)}catch(e){}
  const code=document.getElementById('leaveMainCode');
  if(code)code.focus();
  return false;
 }
+window.clearLeaveForm=clearLeaveForm;
 function clearPermForm(){
- clear(['permId','permMainCode','permEmployeeName','permJobTitle','permGender','permEmploymentType','permDepartment','permSeq','permDate','timeFrom','timeTo','permType','permNotes']);
+ const form=document.getElementById('permForm');
+ if(!form)return false;
+ form.reset();
+ form.querySelectorAll('input,select,textarea').forEach(el=>{
+  if(el.type==='button'||el.type==='submit')return;
+  if(el.tagName==='SELECT')el.selectedIndex=0;
+  else if(el.type==='checkbox'||el.type==='radio')el.checked=false;
+  else el.value='';
+  el.dispatchEvent(new Event('input',{bubbles:true}));
+  el.dispatchEvent(new Event('change',{bubbles:true}));
+ });
  window._permEditAction=false;
- updateSequenceFields();
+ try{updateSequenceFields()}catch(e){}
+ try{document.getElementById('permSeq').value=nextSequence(P)}catch(e){}
+ const code=document.getElementById('permMainCode');
+ if(code)code.focus();
+ return false;
 }
+window.clearPermForm=clearPermForm;
 $('clearLeave').onclick=window.clearLeaveForm;
-$('clearPerm').onclick=clearPermForm;
+$('clearLeave').setAttribute('onclick','return window.clearLeaveForm()');
+$('clearPerm').onclick=window.clearPermForm;
+$('clearPerm').setAttribute('onclick','return window.clearPermForm()');
 $('backup').onclick=()=>{let a=document.createElement('a'),u=URL.createObjectURL(new Blob([JSON.stringify({employees:E,leave_records:L,daily_permissions:P,long_term_leaves:T},null,2)],{type:'application/json'}));a.href=u;a.download='leave-permission-backup.json';a.click();URL.revokeObjectURL(u)};
 db.auth.getSession().then(r=>{if(r.data.session)enter(r.data.session)});
 </script></body></html>
