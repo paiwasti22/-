@@ -995,7 +995,7 @@ body:has(#login:not(.hidden)) #login #loginForm .field input{
 <div id="msg" class="msg hidden"></div></main></div></section></div>
 <script>
 const SUPABASE_URL='https://znomldkvmhbvvbzqldmi.supabase.co',KEY='sb_publishable_z_f3Wc32pGg6in2tDRq5Ug_yg4XqoLH';const TARGET_ACCOUNT_EMAIL='info.milakat@gmail.com';
-try{const oldSession=localStorage.getItem('employee-leave-system-auth'),authKey='sb-znomldkvmhbvvbzqldmi-auth-token';if(oldSession&&!localStorage.getItem(authKey))localStorage.setItem(authKey,oldSession)}catch(e){}const db=window.supabase.createClient(SUPABASE_URL,KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}}),$=id=>document.getElementById(id);let EL=[],EP=[],ET=[],L=[],P=[],O=[],T=[];
+try{const oldSession=localStorage.getItem('employee-leave-system-auth'),authKey='sb-znomldkvmhbvvbzqldmi-auth-token';if(oldSession&&!localStorage.getItem(authKey))localStorage.setItem(authKey,oldSession)}catch(e){}const db=window.supabase.createClient(SUPABASE_URL,KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}}),$=id=>document.getElementById(id);window.__mollatDb=db;let EL=[],EP=[],ET=[],L=[],P=[],O=[],T=[];
 document.addEventListener('click',function(ev){const b=ev.target.closest('[data-search-action]');if(!b)return;ev.preventDefault();const inputId=b.getAttribute('data-search-input');let focusField=null;if(b.getAttribute('data-search-action')==='clear'){focusField=document.getElementById(inputId);if(focusField)focusField.value='';}try{render();if(focusField)focusField.focus();}catch(err){console.error('Search action failed:',err);say('گەڕان سەرکەوتوو نەبوو. تکایە پەڕەکە نوێ بکەرەوە. '+(err&&err.message?err.message:''));}});
 
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -1219,6 +1219,44 @@ window.runGlobalDelete = async function(ev) {
   finally{btn.dataset.running='0';btn.disabled=false;btn.textContent=old||'سڕینەوەی گشتی';}
 };
 db.auth.getSession().then(r=>{if(r.data.session)enter(r.data.session)});
+</script>
+<script>
+(function(){
+ var button=document.getElementById('globalDeleteBtn'),status=document.getElementById('globalDeleteStatus');
+ if(!button)return;
+ function report(t,bad){if(status){status.textContent=t;status.style.display='block';status.style.color=bad?'#9b2525':'#17633b';status.style.background=bad?'#fff0f0':'#eef8f1';}}
+ button.addEventListener('click',async function(ev){
+  ev.preventDefault();ev.stopImmediatePropagation();
+  var client=window.__mollatDb;
+  if(!client){report('پەیوەندی داتابەیس ئامادە نییە. پەڕەکە نوێ بکەرەوە؛ ئەگەر دووبارە بوو کۆنسۆڵ پشکنین دەوێت.',true);return;}
+  if(!window.confirm('ئاگاداری: هەموو تۆمارەکانی فەرمانبەران و مۆڵەت و سەماحی ڕۆژانە و مۆڵەتی درێژخایەن دەسڕدرێنەوە. هەژماری چوونەژوورەوە و هەڵبژاردەکان دەمێننەوە. دڵنیایت؟')){report('کردارەکە هەڵوەشێندرایەوە؛ هیچ داتایەک نەسڕایەوە.',false);return;}
+  if(window.prompt('بۆ پشتڕاستکردنەوە بنووسە: سڕینەوەی گشتی')!=='سڕینەوەی گشتی'){report('وشەی پشتڕاستکردنەوە هەڵەیە؛ هیچ داتایەک نەسڕایەوە.',true);return;}
+  button.disabled=true;var old=button.textContent;button.textContent='تکایە چاوەڕێ بکە...';
+  try{
+   var tables=['leave_employees','permission_employees','long_leave_employees','leave_records','daily_permissions','long_term_leaves'];
+   var backup={created_at:new Date().toISOString(),tables:{}};
+   report('پاشەکەوتی زانیارییەکان ئامادە دەکرێت...',false);
+   for(var i=0;i<tables.length;i++){
+    var q=await client.from(tables[i]).select('*');
+    if(q.error)throw new Error('خوێندنەوەی '+tables[i]+': '+q.error.message);
+    backup.tables[tables[i]]=q.data||[];
+   }
+   var url=URL.createObjectURL(new Blob([JSON.stringify(backup,null,2)],{type:'application/json'}));
+   var a=document.createElement('a');a.href=url;a.download='mollat-backup-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url);},10000);
+   var order=['leave_records','daily_permissions','long_term_leaves','leave_employees','permission_employees','long_leave_employees'];
+   for(var j=0;j<order.length;j++){
+    var d=await client.from(order[j]).delete().neq('id','00000000-0000-0000-0000-000000000000').select('id');
+    if(d.error)throw new Error('سڕینەوەی '+order[j]+': '+d.error.message);
+    var c=await client.from(order[j]).select('id',{count:'exact',head:true});
+    if(c.error)throw new Error('پشکنینی '+order[j]+': '+c.error.message);
+    if(c.count!==0)throw new Error('هێشتا '+c.count+' تۆمار لە '+order[j]+' ماوەتەوە.');
+   }
+   report('سڕینەوەی گشتی سەرکەوتوو بوو. پاشەکەوتی JSONت بپارێزە. پەڕەکە نوێ دەکرێتەوە.',false);
+   setTimeout(function(){location.reload();},1800);
+  }catch(err){console.error('Global delete error:',err);report('سڕینەوە تەواو نەبوو: '+(err&&err.message?err.message:String(err)),true);}
+  finally{button.disabled=false;button.textContent=old||'سڕینەوەی گشتی';}
+ },true);
+})();
 </script>
 
 </body></html>
