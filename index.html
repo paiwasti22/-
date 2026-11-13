@@ -67,6 +67,7 @@ function say(t){$('msg').textContent=t;$('msg').classList.remove('hidden')}
 function set(id,v){$(id).value=v??''}function clear(ids){ids.forEach(id=>set(id,''))}
 function page(id){document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===id));document.querySelectorAll('[data-page]').forEach(x=>x.classList.toggle('active',x.dataset.page===id))}
 document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>page(b.dataset.page));
+document.querySelectorAll('.page:not(#home) form > .actions').forEach(actions=>{if(actions.querySelector('[data-cancel-action]'))return;let b=document.createElement('button');b.type='button';b.className='btn gray';b.textContent='پاشگەزبوونەوە';b.setAttribute('data-cancel-action','true');b.addEventListener('click',()=>page('home'));actions.appendChild(b)});
 function recordEmployeeName(x){return arabicDigits(x.employee_main_code||'')+' — '+(x.employee_name||'—')}
 function normalizeMainCode(v){return latinDigits(v||'').replace(/\s+/g,'').trim().toLowerCase()}
 function employeeByCode(prefix,code){let c=normalizeMainCode(code),rows=prefix==='leave'?EL:prefix==='perm'?EP:ET;return c?rows.find(x=>normalizeMainCode(x.main_code)===c):null}
