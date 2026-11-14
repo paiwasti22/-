@@ -1081,7 +1081,8 @@ async function saveOption(category,editing){
  if(!value)return say('تکایە ناوی هەڵبژاردە بنووسە.');
  if(editing&&(!id||!previous||previous.category!==category))return say('تکایە سەرەتا هەڵبژاردەی پێشوو لە لیستەکە هەڵبژێرە، پاشان دەستکاری بکە.');
  if(O.some(o=>o.id!==id&&o.category===category&&o.value.toLowerCase()===value.toLowerCase()))return say('ئەم هەڵبژاردەیە پێشتر هەیە.');
- let result=editing?await db.from('app_options').update({value}).eq('id',id):await db.from('app_options').insert({category,value});
+ if(!CURRENT_PROFILE?.organization_id)return say('ناسنامەی فەرمانگە نەدۆزرایەوە؛ تکایە دووبارە بچۆ ژوورەوە.');
+ let result=editing?await db.from('app_options').update({value}).eq('id',id):await db.from('app_options').insert({category,value,organization_id:CURRENT_PROFILE.organization_id});
  if(result.error)return say('کردارەکە سەرکەوتوو نەبوو: '+result.error.message);
  if(editing&&previous&&previous.value!==value){
   let targets=category==='department'?[['leave_employees','department'],['permission_employees','department'],['long_leave_employees','department'],['leave_records','employee_department'],['daily_permissions','employee_department'],['long_term_leaves','employee_department']]:[['leave_employees','default_leave_type'],['leave_records','employee_default_leave_type'],['long_term_leaves','leave_type']];
