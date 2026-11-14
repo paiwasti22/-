@@ -1080,7 +1080,7 @@ async function saveOption(category,editing){
  let prefix=category==='department'?'departmentOption':'leaveTypeOption',suffix=category==='department'?'Department':'LeaveType',chooser=$(category==='department'?'departmentOptionSelect':'leaveTypeOptionSelect'),value=$(prefix+'Value').value.trim(),id=editing?(chooser?.value||$(prefix+'Id').value):'',previous=O.find(o=>o.id===id);$(prefix+'Id').value=id;
  if(!value)return say('تکایە ناوی هەڵبژاردە بنووسە.');
  if(editing&&(!id||!previous||previous.category!==category))return say('تکایە سەرەتا هەڵبژاردەی پێشوو لە لیستەکە هەڵبژێرە، پاشان دەستکاری بکە.');
- if(O.some(o=>o.id!==id&&o.category===category&&o.value.toLowerCase()===value.toLowerCase()))return say('ئەم هەڵبژاردەیە پێشتر هەیە.');
+ if(O.some(o=>o.id!==id&&o.category===category&&o.value.trim().toLowerCase()===value.trim().toLowerCase()))return say('ئەم هەڵبژاردەیە پێشتر لە هەمان فەرمانگەدا هەیە.');
  if(!CURRENT_PROFILE?.organization_id)return say('ناسنامەی فەرمانگە نەدۆزرایەوە؛ تکایە دووبارە بچۆ ژوورەوە.');
  let result=editing?await db.from('app_options').update({value}).eq('id',id):await db.from('app_options').insert({category,value,organization_id:CURRENT_PROFILE.organization_id});
  if(result.error)return say('کردارەکە سەرکەوتوو نەبوو: '+result.error.message);
